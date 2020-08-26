@@ -15,7 +15,7 @@ preamble = """
 def wordgen():
     # This can generate up to 28 * 28 * 27 -> over 20k words.
     alphabet = tuple("abcdefghijklmnopqrstuvwxyz")
-    alphebet_plus_empty = ("", ) + tuple(alphabet)
+    alphebet_plus_empty = ("",) + tuple(alphabet)
     for pre1 in alphebet_plus_empty:
         for pre2 in alphebet_plus_empty:
             for c in alphabet:
@@ -58,14 +58,14 @@ def rename_variabes_js(text):
                 word_start = None
         else:
             if c == "_" or c.isalpha():
-                if not (i > 0 and text[i-1] == "."):
+                if not (i > 0 and text[i - 1] == "."):
                     word_start = i
             elif c == "'":
                 in_something = "'"
             elif c == '"':
                 in_something = '"'
-            elif c == '/' and i > 0 and text[i-1] == "/":
-                in_something = '\n'
+            elif c == "/" and i > 0 and text[i - 1] == "/":
+                in_something = "\n"
 
     # Some words are protected
     protected = "CSS", "version"
@@ -108,6 +108,7 @@ def minify_css(text):
 
 last_result = ""
 
+
 def main():
     global last_result
 
@@ -117,14 +118,22 @@ def main():
     js_ori = open("src/faq-this.js", "rb").read().decode()
     js = minify_js(js_ori)
 
-    total = preamble + "(function() {\n" + js.replace('CSS="";', f'CSS="{css}";\n') + "\n})();"
+    total = (
+        preamble
+        + "(function() {\n"
+        + js.replace('CSS="";', f'CSS="{css}";\n')
+        + "\n})();"
+    )
 
     if total == last_result:
         return
 
     last_result = total
 
-    print(f"Minimizing: original css and js are {len(css_ori)}+{len(js_ori)}={len(js_ori) + len(css_ori)} chars. Minified: {len(total)}")
+    print(
+        f"Minimizing: original css and js are {len(css_ori)}+{len(js_ori)}"
+        + f"={len(js_ori) + len(css_ori)} chars. Minified: {len(total)}"
+    )
 
     with open("site/faq-this.min.js", "wb") as f:
         f.write(total.encode())
