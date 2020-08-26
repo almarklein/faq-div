@@ -100,8 +100,9 @@ def minify_js(text):
 def minify_css(text):
     text = remove_comments_and_trailing_ws(text)
     text = text.replace("\n", " ")
-    text = text.replace("{ ", "{").replace(" }", "}")
+    text = text.replace("{ ", "{").replace(" }", "}").replace(" {", "{")
     text = text.replace(": ", ":").replace(", ", ",").replace("; ", ";")
+    text = text.replace(" > ", ">")
     text = text.replace('"', "'")  # for consistency and embedding
     return text
 

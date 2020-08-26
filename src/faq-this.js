@@ -21,12 +21,9 @@ window.addEventListener("load", function() {
         }
         if (!added) {document.head.prepend(css_element);}
     }
-    // Detect faq divs
+    // Detect faq starts
     var funcs = [];
-    for (let el of document.getElementsByClassName("faq-this")) {
-        funcs.push(faq_this_div(el));
-    }
-    for (let el of document.getElementsByClassName("faq-this-start")) {
+    for (let el of document.getElementsByClassName("faq-start")) {
         funcs.push(faq_this_div(el));
     }
     function when_has_changes() {
@@ -49,10 +46,10 @@ function toggle(headernode) {
     // Global function to toggle the visibility of a q/a.
     var node = headernode.parentNode; //e.target.parentNode;
     node.classList.remove("hidden");
-    if (node.classList.contains("hiddenanswer")) {
-        node.classList.remove("hiddenanswer");
+    if (node.classList.contains("collapsed")) {
+        node.classList.remove("collapsed");
     } else {
-        node.classList.add("hiddenanswer");
+        node.classList.add("collapsed");
     }
 }
 
@@ -64,6 +61,7 @@ function faq_this_div(ref_node, detect_start_end) {
     var config = ref_node.dataset;
 
     function search() {
+        var key = "ljbsdfaljhsbdkey"; // Can identify code from this
         // Get search text (our "needle"), in parts
         var fullneedle = search_node.value.toLowerCase().replace(",", "");
         var parts = [];
@@ -89,7 +87,7 @@ function faq_this_div(ref_node, detect_start_end) {
             for (let hash in index) {
                 let qa = index[hash];
                 qa.node.classList.remove('hidden');
-                qa.node.classList.add('hiddenanswer');
+                qa.node.classList.add('collapsed');
             }
             // Show in-between nodes too
             for (let s of sections) {
@@ -145,10 +143,10 @@ function faq_this_div(ref_node, detect_start_end) {
                     search_result_node.appendChild(node2);
                     if (i < 5) {
                         node2.classList.remove('hidden');
-                        node2.classList.remove('hiddenanswer');
+                        node2.classList.remove('collapsed');
                     } else {
                         node2.classList.remove('hidden');
-                        node2.classList.add('hiddenanswer');
+                        node2.classList.add('collapsed');
                     }
                 }
             }
@@ -162,7 +160,7 @@ function faq_this_div(ref_node, detect_start_end) {
         var qa = index[hash];
         if (typeof qa != 'undefined') {
             qa.node.classList.remove("hidden");
-            qa.node.classList.remove("hiddenanswer");
+            qa.node.classList.remove("collapsed");
             highlight_element(qa.node);
             return true;
         } else if (hash.startsWith("faq-search=")) {
@@ -206,15 +204,15 @@ function faq_this_div(ref_node, detect_start_end) {
     window.index = index;
     //
     var node = ref_node.children[0];
-    if (ref_node.classList.contains("faq-this-start")) {
-        ref_node.classList.add("faq-this");
+    if (ref_node.classList.contains("faq-start")) {
+        ref_node.classList.add("faq");
         node = ref_node;
     }
     // Walk the DOM
     while (node.nextElementSibling) {
         node = node.nextElementSibling;
         var node_type = node.nodeName.toLowerCase();
-        if (node.classList.contains("faq-this-end")) {
+        if (node.classList.contains("faq-end")) {
             break;
         } else if (node_type == "h3") {
             // Get hash for this question
@@ -231,7 +229,7 @@ function faq_this_div(ref_node, detect_start_end) {
                 else { hash = ori_hash + j; }
             }
             // Add to index and sections
-            index[hash] = {hash: hash};
+            index[hash] = {"hash": hash};
             sections.push([hash, node]);
         } else if (node_type == "h2" || node_type == "h1" || node_type == "hr") {
             sections.push([null, node]);  // no hash
@@ -278,15 +276,15 @@ function faq_this_div(ref_node, detect_start_end) {
         if (hash !== null) {
             // Add the h2 node plus p nodes, but tweak a bit
             var wrapper_node = document.createElement("div");
-            wrapper_node.classList.add("qa-container");
-            wrapper_node.classList.add("hiddenanswer");
+            wrapper_node.classList.add("qa");
+            wrapper_node.classList.add("collapsed");
             wrapper_node.setAttribute("id", hash);
             var link_node = document.createElement("a");
             link_node.innerHTML = "get link / share";
             link_node.className = "sharelink";
             link_node.setAttribute("href", "#" + hash);
             var header_node = s[1];
-            header_node.setAttribute("onclick", "faq_this.toggle(this);");
+            header_node.setAttribute("onclick", "faqthis.toggle(this);");
             wrapper_node.appendChild(header_node);
             for (let j=2; j<s.length; j++) { wrapper_node.appendChild(s[j]); }
             wrapper_node.appendChild(link_node);
@@ -303,4 +301,4 @@ function faq_this_div(ref_node, detect_start_end) {
 }  // end of faq_this_div()
 
 // Set global
-window.faq_this = {"version": version, "toggle": toggle};
+window.faqthis = {"version": version, "toggle": toggle};

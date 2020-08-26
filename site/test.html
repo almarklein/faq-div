@@ -16,17 +16,17 @@
 
 <h1>FAQs 1</h1>
 
-<div class='faq-this-start'></div>
+<div class='faq-start'></div>
 
     <h3>question 1</h3>
     <p>meh</p>
     <h3>question 2</h3>
     <p>boh</p>
 
-<div class='faq-this-end'></div>
+<div class='faq-end'></div>
 
 <h1>FAQs 2</h1>
-<div class='faq-this-start' data-email='fake-email@canpute.com'></div>
+<div class='faq-start' data-email='fake-email@canpute.com'></div>
 
 <h2>General</h2>
 
@@ -50,7 +50,31 @@
     <p>Or ask via the email address that you received when you purchased a license.</p>
 
 
-<div class='faq-this-end'></div>
+<div class='faq-end'></div>
+
+<style>
+/* Custimizations! */
+
+/* Very easy to target the elements containging the question. */
+.faq h3 {
+    color: red;
+}
+
+.faq .search {
+    background: #afa;
+}
+
+/* target a question + answer item */
+.faq .qa {
+    border-radius: 12px;
+}
+
+/* when it is collapsed (answer is hidden) */
+.faq .qa.collapsed {
+    border-radius: 20px;
+}
+
+</style>
 
 </body>
 </html>

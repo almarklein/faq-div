@@ -1,14 +1,4 @@
-.faq-this .hidden {
-    display: none;
-}
-.faq-this div.qa-container.hiddenanswer > * {
-    display: none;
-}
-.faq-this div.qa-container.hiddenanswer > h3 {
-    display: block;
-}
-
-.faq-this div.qa-container {
+.faq .qa {
     box-sizing: border-box;
     width: 100%;
     max-width: 800px;
@@ -21,30 +11,40 @@
     transition: box-shadow 0.5s, background-color 0.5s;
     overflow-y: auto;
 }
-.faq-this div.qa-container.hiddenanswer {
+.faq .qa.hidden {
+    display: none;
+}
+.faq .qa.collapsed {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     background: rgba(127, 127, 127, 0.05);
     overflow-y: hidden;
 }
-.faq-this div.qa-container.highlight {
+.faq .qa.collapsed > * {
+    display: none;
+}
+.faq .qa.collapsed > h3 {
+    display: block;
+}
+
+.faq .qa.highlight {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
-.faq-this div.qa-container > h3 {
+.faq .qa > h3 {
     margin-top: 0;
     cursor: pointer;
     margin: 0;
 }
 
-.faq-this a.sharelink { text-decoration: none; color: #999; }
-.faq-this a.sharelink:hover { text-decoration: underline; color: #999; }
+.faq a.sharelink { text-decoration: none; color: #999; }
+.faq a.sharelink:hover { text-decoration: underline; color: #999; }
 
-.faq-this h3::after { content: ' ▾'; color: rgba(0, 0, 0, 0.3); }
-.faq-this h3:hover::after { content: " ▴"; color: rgba(0, 0, 0, 0.5); }
-.faq-this .hiddenanswer > h3::after { content: " ▾"; color: rgba(0, 0, 0, 0.3); }
-.faq-this .hiddenanswer > h3:hover::after { content: " ▾"; color: rgba(0, 0, 0, 0.5); }
+.faq .qa > h3::after { content: ' ▾'; color: rgba(0, 0, 0, 0.3); }
+.faq .qa > h3:hover::after { content: " ▴"; color: rgba(0, 0, 0, 0.5); }
+.faq .qa.collapsed > h3::after { content: " ▾"; color: rgba(0, 0, 0, 0.3); }
+.faq .qa.collapsed > h3:hover::after { content: " ▾"; color: rgba(0, 0, 0, 0.5); }
 
-.faq-this input.search {
+.faq input.search {
     box-sizing: border-box;
     width: 100%;
     max-width: 800px;
@@ -54,7 +54,7 @@
     padding: 0.5em;
     margin: 0.5em 0;
 }
-.faq-this input.search:focus {
+.faq input.search:focus {
     outline: none;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
 }
