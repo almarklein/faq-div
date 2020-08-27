@@ -19,7 +19,7 @@
 
 <h1>FAQs 1</h1>
 
-<div class='faq-start' data-collapse=false></div>
+<div class='faq-start' data-collapse=false data-search-placeholder="zoeken ..."></div>
 
     <h3>question 1</h3>
     <p>meh</p>
@@ -29,7 +29,7 @@
 <div class='faq-end'></div>
 
 <h1>FAQs 2</h1>
-<div class='faq' data-email='fake-email@canpute.com' data-search=true >
+<div class='faq' data-search-info="Found COUNT results ... you could <a href='mailto:fake-email@canpute.com?subject=SEARCH'>ask us</a>!" data-search=true >
 
 <h2>General</h2>
 
@@ -90,9 +90,13 @@
 <h1>Options</h1>
 Options can be set by using the data- field in the html element.
 
-* data-search: set to "false" to hide the search element. Default is "true".
 * data-collapse: set to "false" to show q&a items uncollapsed. Default is "true".
-* data-email: set to an email addres to display the adres when user uses search.
+* data-search: set to "false" to hide the search element. Default is "true".
+* data-search-placeholder: custimize the placeholder text in the search input box.
+* data-search-info: this string is displayed when the user does a search.
+  The text "COUNT" is replaced with the search count, and the text "SEARCH" is replaced with
+  the current text in the search box. You can use this to customize for other languages,
+  but also to e.g. display a mailto link.
 
 </body>
 </html>

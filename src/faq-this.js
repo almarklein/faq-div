@@ -19,7 +19,7 @@ function init() {
         css_element.innerText = CSS;
         let added = false;
         for (let child of document.head.children) {
-            if (child.nodeName == "LINK") {
+            if (child.nodeName.toLowerCase() == "link") {
                 document.head.insertBefore(css_element, child);
                 added = true;
                 break;
@@ -122,14 +122,6 @@ function faq_this_div(ref_node, detect_start_end) {
                 }
             }
         } else {
-            // Show link to send email
-            search_info_node.innerHTML = "";
-            if (config.email) {
-                let preamble = "If you can't find what you're looking for, just ";
-                let elink = "<a href='mailto:EMAIL?subject=SUBJECT'>ask us!</a>";
-                elink = elink.replace("EMAIL", config.email).replace("SUBJECT", search_node.value);
-                search_info_node.innerHTML = preamble + elink + " (via " + config.email + ").<br>";
-            }
             // Hide nodes
             for (let hash in index) {
                 let qa = index[hash];
@@ -184,7 +176,8 @@ function faq_this_div(ref_node, detect_start_end) {
                     }
                 }
             }
-            search_info_node.innerHTML = 'Found ' + search_count + ' results ... ' + search_info_node.innerHTML;
+            let info = config.searchInfo || "COUNT results";
+            search_info_node.innerHTML = info.replace("COUNT", search_count).replace("SUBJECT", search_node.value) + "<br>";
         }
     }  // end of search()
 
@@ -296,7 +289,7 @@ function faq_this_div(ref_node, detect_start_end) {
     var search_info_node = document.createElement("div");
     search_info_node.classList.add("search-info");
     search_node.setAttribute("type", "text");
-    search_node.setAttribute("placeholder", "search ...");  // 🔍
+    search_node.setAttribute("placeholder", config.searchPlaceholder || "search ...");  // 🔍
     search_node.addEventListener("input", search);
     search_node.className = "search";
     //search_wrapper_node.appendChild(search_node);
