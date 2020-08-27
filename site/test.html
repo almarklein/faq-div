@@ -14,6 +14,9 @@
 
 <body>
 
+<div class='faq-start'></div>
+<div class='faq-end'></div>
+
 <h1>FAQs 1</h1>
 
 <div class='faq-start'></div>
@@ -25,8 +28,9 @@
 
 <div class='faq-end'></div>
 
+<div class='faq' data-email='fake-email@canpute.com'>
 <h1>FAQs 2</h1>
-<div class='faq-start' data-email='fake-email@canpute.com'></div>
+
 
 <h2>General</h2>
 
@@ -50,7 +54,7 @@
     <p>Or ask via the email address that you received when you purchased a license.</p>
 
 
-<div class='faq-end'></div>
+</div>
 
 <style>
 /* Custimizations! */
@@ -64,7 +68,11 @@
     background: #afa;
 }
 
-/* target a question + answer item */
+.faq .search-info {
+    font-size: 70%;
+}
+
+/* target a question + answer item  */
 .faq .qa {
     border-radius: 12px;
 }
@@ -73,7 +81,10 @@
 .faq .qa.collapsed {
     border-radius: 20px;
 }
-
+/* when the item pops up as a search result */
+.faq .qa.searchresult {
+    background: #ddf;
+}
 </style>
 
 </body>

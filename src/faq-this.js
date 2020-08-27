@@ -1,10 +1,16 @@
 // When minified, this whole code gets wrapped into a function to avoid variable leakage.
 // Also, the CSS variable gets inserted.
 
+// We look for divs that have a classname "faq", and turn their child h3-p pairs into qa items.
+// Alternatively, we hoist elements in between two divs which have classes "faq-start" and "faq-end", respectively.
+// The faq-start element functions as normal faq element from there.
+
 var version = "1.1";
 var CSS = "";
 
-window.addEventListener("load", function() {
+window.addEventListener("load", init);
+
+function init() {
     // Include CSS
     if (!document.getElementById("faq-this-css")) {
         let css_element = document.createElement('style');
@@ -21,10 +27,25 @@ window.addEventListener("load", function() {
         }
         if (!added) {document.head.prepend(css_element);}
     }
-    // Detect faq starts
+    // Detect faq starts, turn into normal faq divs
+    var starts = [];
+    for (let el of document.getElementsByClassName("faq-start")) {starts.push(el);}
+    for (let el of starts) {
+        if (el.children.length) {continue;}
+        el.classList.add("faq");
+        let nodes = [];
+        let node = el.nextElementSibling;
+        while (node && !node.classList.contains("faq-start") && !node.classList.contains("faq-end") && !node.classList.contains("faq")) {
+            nodes.push(node);
+            node = node.nextElementSibling;
+        }
+        for (let node of nodes) {el.appendChild(node);}
+    }
     var funcs = [];
-    for (let el of document.getElementsByClassName("faq-start")) {
-        funcs.push(faq_this_div(el));
+    for (let el of document.getElementsByClassName("faq")) {
+        if (el.children.length && !el.children[0].classList.contains("search")) {
+            funcs.push(faq_this_div(el));
+        }
     }
     function when_has_changes() {
         var hash = location.hash.slice(1);
@@ -39,7 +60,7 @@ window.addEventListener("load", function() {
     if (location.hash.startsWith("#faq-search=")) {
         location.hash = '';
     }
-});
+}
 
 
 function toggle(headernode) {
@@ -82,8 +103,7 @@ function faq_this_div(ref_node, detect_start_end) {
 
         if (needles.length == 0) {
             // No search - show all
-            search_result_node.innerHTML = "";
-            search_info_node.innerHTML = "";
+            clear_search_results();
             for (let hash in index) {
                 let qa = index[hash];
                 qa.node.classList.remove('hidden');
@@ -105,6 +125,12 @@ function faq_this_div(ref_node, detect_start_end) {
                 let elink = "<a href='mailto:EMAIL?subject=SUBJECT'>ask us!</a>";
                 elink = elink.replace("EMAIL", config.email).replace("SUBJECT", search_node.value);
                 search_info_node.innerHTML = preamble + elink + " (via " + config.email + ").<br>";
+            }
+            // Hide nodes
+            for (let hash in index) {
+                let qa = index[hash];
+                qa.node.classList.add('hidden');
+                qa.node.classList.remove('collapsed');
             }
             // Hide in-between nodes
             for (let s of sections) {
@@ -133,14 +159,17 @@ function faq_this_div(ref_node, detect_start_end) {
             }
             questions.sort(function (a, b) { return b[0] - a[0]; });
             // Show questions
-            search_result_node.innerHTML = "";
+            clear_search_results();
+            var search_count = 0;
             for (let i=0; i<questions.length; i++) {
                 let hits = questions[i][0];
                 let node = questions[i][1];
                 node.classList.add('hidden');
                 if (hits > 0 && i < 16) {
                     let node2 = node.cloneNode(true);
-                    search_result_node.appendChild(node2);
+                    node2.classList.add('searchresult');
+                    ref_node.appendChild(node2);
+                    search_count += 1;
                     if (i < 5) {
                         node2.classList.remove('hidden');
                         node2.classList.remove('collapsed');
@@ -150,12 +179,20 @@ function faq_this_div(ref_node, detect_start_end) {
                     }
                 }
             }
-            if (search_result_node.children.length == 0) {
-                search_info_node.innerHTML = 'No results ... ' + search_info_node.innerHTML;
-            }
+            search_info_node.innerHTML = 'Found ' + search_count + ' results ... ' + search_info_node.innerHTML;
         }
     }  // end of search()
 
+    function clear_search_results () {
+        var nodes = [];  // First collect nodes, then remove. Otherwise it wont work.
+        for (let node of ref_node.getElementsByClassName('qa searchresult')) {
+            nodes.push(node);
+        }
+        for (let node of nodes) {
+            ref_node.removeChild(node);
+        }
+        search_info_node.innerHTML = "";
+    }
     function ensure_visible(hash) {
         var qa = index[hash];
         if (typeof qa != 'undefined') {
@@ -199,22 +236,15 @@ function faq_this_div(ref_node, detect_start_end) {
     // Prepare
     var sections = [[null]];
     var index = {};
-    // todo: DEBUGGING
-    window.sections = sections;
-    window.index = index;
-    //
+
     var node = ref_node.children[0];
-    if (ref_node.classList.contains("faq-start")) {
-        ref_node.classList.add("faq");
-        node = ref_node;
-    }
+    if (!node) {return;}
+    //if (node.classList && node.classList.contains("search")) {return;}
+
     // Walk the DOM
-    while (node.nextElementSibling) {
-        node = node.nextElementSibling;
+    while (node) {
         var node_type = node.nodeName.toLowerCase();
-        if (node.classList.contains("faq-end")) {
-            break;
-        } else if (node_type == "h3") {
+        if (node_type == "h3") {
             // Get hash for this question
             var hash = '';
             for (let c of node.innerText.toLowerCase().replace(new RegExp("\ ", 'g'), "-")) {
@@ -236,6 +266,7 @@ function faq_this_div(ref_node, detect_start_end) {
         } else {
             sections[sections.length-1].push(node);
         }
+        node = node.nextElementSibling;
     }
 
     // Build index
@@ -255,20 +286,20 @@ function faq_this_div(ref_node, detect_start_end) {
     ref_node.innerHTML = "";
 
     // Add search bar
-    var search_wrapper_node = document.createElement("div");
-    search_wrapper_node.className = "search-container";
+    //var search_wrapper_node = document.createElement("div");
+    //search_wrapper_node.className = "search-container";
     var search_node = document.createElement("input");
     var search_info_node = document.createElement("div");
-    search_info_node.style.fontSize = "90%";
+    search_info_node.classList.add("search-info");
     search_node.setAttribute("type", "text");
-    search_node.setAttribute("placeholder", "How can I ...");
+    search_node.setAttribute("placeholder", "search ...");  // 🔍
     search_node.addEventListener("input", search);
     search_node.className = "search";
-    search_wrapper_node.appendChild(search_node);
-    search_wrapper_node.appendChild(search_info_node);
-    ref_node.appendChild(search_wrapper_node);
-    var search_result_node = document.createElement("div");
-    ref_node.appendChild(search_result_node);
+    //search_wrapper_node.appendChild(search_node);
+    //ref_node.appendChild(search_wrapper_node);
+    ref_node.appendChild(search_node);
+    ref_node.appendChild(search_info_node);
+
 
     // Write back the sections
     for (let s of sections) {
@@ -301,4 +332,4 @@ function faq_this_div(ref_node, detect_start_end) {
 }  // end of faq_this_div()
 
 // Set global
-window.faqthis = {"version": version, "toggle": toggle};
+window.faqthis = {"version": version, "toggle": toggle, "init": init};
