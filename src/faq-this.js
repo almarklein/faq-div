@@ -8,7 +8,11 @@
 var version = "1.1";
 var CSS = "";
 
+// dict of faqs objects
+var faqs = {};
+
 window.addEventListener("load", init);
+window.addEventListener("hashchange", when_hash_changes);
 
 function init() {
     // Include CSS
@@ -41,27 +45,52 @@ function init() {
         }
         for (let node of nodes) {el.appendChild(node);}
     }
-    var funcs = [];
+    // Turn faq divs into a proper faq :)
+    var count = "";
     for (let el of document.getElementsByClassName("faq")) {
         if (el.children.length && !el.classList.contains("initialized")) {
             el.classList.add("initialized");
-            funcs.push(faq_this_div(el));
+            faq_this_div(el, "faq" + count);
+            count = Number(count) + 1;
         }
     }
-    function when_has_changes() {
-        var hash = location.hash.slice(1);
-        if (hash) {
-            for (let f of funcs) {
-                if (f(hash)) { break; }
-            }
-        }
-    }
-    window.addEventListener("hashchange", when_has_changes);
-    when_has_changes();
-    if (location.hash.startsWith("#faq-search=")) {
-        location.hash = '';
+    when_hash_changes();
+}
+
+
+function when_hash_changes() {
+    // Delegate to the faq to which this applies
+    let hash = location.hash;
+    let i = hash.indexOf(":");
+    if (i > 0 && hash.startsWith('#faq')) {
+        let faq_id = hash.slice(1, i);
+        let faq = faqs[faq_id];
+        if (faq) { faq.onhash(hash.slice(i+1)); }
     }
 }
+
+
+var _highlighting = {};
+function highlight_element(el, step) {
+    if (typeof step == "undefined") { step = 0; }
+    var wait = 1;
+    if (step == 0) {
+        el.style.transition = "none";
+    } else if (step != _highlighting[el.id]) {
+        return;
+    } else if (step == 1) {
+        el.classList.add("highlight");
+    } else if (step == 2) {
+        el.style.transition = null;
+        wait = 1000;
+    } else {
+        el.classList.remove("highlight");
+        delete _highlighting[el.id];
+        return;
+    }
+    _highlighting[el.id] = step + 1;
+    window.setTimeout(highlight_element, wait, el, step + 1);
+}  // end of highlight_element()
 
 
 function toggle(headernode) {
@@ -75,9 +104,9 @@ function toggle(headernode) {
     }
 }
 
-function faq_this_div(ref_node, detect_start_end) {
-    // Global function to setup a FAQ from a parent- or start-node
-    // Returns func ensure_visible().
+
+function faq_this_div(ref_node, faq_id) {
+    // Global function to setup a FAQ from a parent faq node
 
     // We use the dataset feature: data-xx fields are available as config.xx
     var config = ref_node.dataset;
@@ -190,55 +219,28 @@ function faq_this_div(ref_node, detect_start_end) {
             ref_node.removeChild(node);
         }
     }
-    function ensure_visible(hash) {
+
+    function onhash(hash) {
         var qa = index[hash];
-        if (typeof qa != 'undefined') {
+        if (qa) {
             qa.node.classList.remove("hidden");
             qa.node.classList.remove("collapsed");
             highlight_element(qa.node);
-            return true;
-        } else if (hash.startsWith("faq-search=")) {
-            search_node.value = hash.split("=", 2)[1];
+        } else {
+            search_node.value = hash.replace("-", " ");
             search();
-            return false;
-        } else {
-            return false;
         }
-    }  // end of ensure_visible()
-
-    var _highlighting = {};
-    function highlight_element(el, step) {
-        if (typeof step == "undefined") { step = 0; }
-        var wait = 1;
-        if (step == 0) {
-            el.style.transition = "none";
-        } else if (step != _highlighting[el.id]) {
-            return;
-        } else if (step == 1) {
-            el.classList.add("highlight");
-        } else if (step == 2) {
-            el.style.transition = null;
-            wait = 1000;
-        } else {
-            el.classList.remove("highlight");
-            delete _highlighting[el.id];
-            return;
-        }
-        _highlighting[el.id] = step + 1;
-        window.setTimeout(highlight_element, wait, el, step + 1);
-    }  // end of highlight_element()
+    }
 
     // Collect each h3 with following p's (or ul's)
 
     // Prepare
     var sections = [[null]];
     var index = {};
-
-    var node = ref_node.children[0];
-    if (!node) {return;}
-    //if (node.classList && node.classList.contains("search")) {return;}
+    faqs[faq_id] = {"onhash": onhash};
 
     // Walk the DOM
+    var node = ref_node.children[0];
     while (node) {
         var node_type = node.nodeName.toLowerCase();
         if (node_type == "h3") {
@@ -304,26 +306,29 @@ function faq_this_div(ref_node, detect_start_end) {
     for (let s of sections) {
         let hash = s[0];
         if (hash !== null) {
-            // Add the h2 node plus p nodes, but tweak a bit
+            // Prep qa wrapper node
             var wrapper_node = document.createElement("div");
             wrapper_node.classList.add("qa");
-
             wrapper_node.setAttribute("id", hash);
-            var link_node = document.createElement("a");
-            link_node.innerHTML = "get link / share";
-            link_node.className = "sharelink";
-            link_node.setAttribute("href", "#" + hash);
+            // Add the h2 node plus p nodes, but tweak a bit
             var header_node = s[1];
             wrapper_node.appendChild(header_node);
             for (let j=2; j<s.length; j++) { wrapper_node.appendChild(s[j]); }
-            wrapper_node.appendChild(link_node);
-            ref_node.appendChild(wrapper_node);
-            index[hash].node = wrapper_node;
+            // Add link
+            var link_node = document.createElement("a");
+            link_node.innerHTML = " ¶";
+            link_node.className = "qalink";
+            link_node.setAttribute("href", "#" + faq_id + ":" + hash);
+            header_node.appendChild(link_node);
+            // Collapsable?
             if (config.collapse != "false") {
                 wrapper_node.classList.add("collapsible");
                 wrapper_node.classList.add("collapsed");
                 header_node.setAttribute("onclick", "faqthis.toggle(this);");
             }
+            // Done
+            ref_node.appendChild(wrapper_node);
+            index[hash].node = wrapper_node;
         } else {
             // Just add the original nodes
             for (let j=1; j<s.length; j++) {
@@ -331,7 +336,6 @@ function faq_this_div(ref_node, detect_start_end) {
             }
         }
     }
-    return ensure_visible;
 }  // end of faq_this_div()
 
 // Set global
