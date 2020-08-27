@@ -43,7 +43,8 @@ function init() {
     }
     var funcs = [];
     for (let el of document.getElementsByClassName("faq")) {
-        if (el.children.length && !el.children[0].classList.contains("search")) {
+        if (el.children.length && !el.classList.contains("initialized")) {
+            el.classList.add("initialized");
             funcs.push(faq_this_div(el));
         }
     }
@@ -69,7 +70,7 @@ function toggle(headernode) {
     node.classList.remove("hidden");
     if (node.classList.contains("collapsed")) {
         node.classList.remove("collapsed");
-    } else {
+    } else if (node.classList.contains("collapsible")) {
         node.classList.add("collapsed");
     }
 }
@@ -104,10 +105,13 @@ function faq_this_div(ref_node, detect_start_end) {
         if (needles.length == 0) {
             // No search - show all
             clear_search_results();
+            search_info_node.innerHTML = "";
             for (let hash in index) {
                 let qa = index[hash];
                 qa.node.classList.remove('hidden');
-                qa.node.classList.add('collapsed');
+                if (qa.node.classList.contains("collapsible")) {
+                    qa.node.classList.add('collapsed');
+                }
             }
             // Show in-between nodes too
             for (let s of sections) {
@@ -170,12 +174,13 @@ function faq_this_div(ref_node, detect_start_end) {
                     node2.classList.add('searchresult');
                     ref_node.appendChild(node2);
                     search_count += 1;
-                    if (i < 5) {
-                        node2.classList.remove('hidden');
-                        node2.classList.remove('collapsed');
-                    } else {
-                        node2.classList.remove('hidden');
-                        node2.classList.add('collapsed');
+                    node2.classList.remove('hidden');
+                    if (node2.classList.remove('collapsible')) {
+                        if (i < 5) {
+                            node2.classList.remove('collapsed');
+                        } else {
+                            node2.classList.add('collapsed');
+                        }
                     }
                 }
             }
@@ -191,7 +196,6 @@ function faq_this_div(ref_node, detect_start_end) {
         for (let node of nodes) {
             ref_node.removeChild(node);
         }
-        search_info_node.innerHTML = "";
     }
     function ensure_visible(hash) {
         var qa = index[hash];
@@ -300,6 +304,8 @@ function faq_this_div(ref_node, detect_start_end) {
     ref_node.appendChild(search_node);
     ref_node.appendChild(search_info_node);
 
+    if (config.search == 'false') {search_node.style.display = 'none';}
+
 
     // Write back the sections
     for (let s of sections) {
@@ -308,19 +314,23 @@ function faq_this_div(ref_node, detect_start_end) {
             // Add the h2 node plus p nodes, but tweak a bit
             var wrapper_node = document.createElement("div");
             wrapper_node.classList.add("qa");
-            wrapper_node.classList.add("collapsed");
+
             wrapper_node.setAttribute("id", hash);
             var link_node = document.createElement("a");
             link_node.innerHTML = "get link / share";
             link_node.className = "sharelink";
             link_node.setAttribute("href", "#" + hash);
             var header_node = s[1];
-            header_node.setAttribute("onclick", "faqthis.toggle(this);");
             wrapper_node.appendChild(header_node);
             for (let j=2; j<s.length; j++) { wrapper_node.appendChild(s[j]); }
             wrapper_node.appendChild(link_node);
             ref_node.appendChild(wrapper_node);
             index[hash].node = wrapper_node;
+            if (config.collapse != "false") {
+                wrapper_node.classList.add("collapsible");
+                wrapper_node.classList.add("collapsed");
+                header_node.setAttribute("onclick", "faqthis.toggle(this);");
+            }
         } else {
             // Just add the original nodes
             for (let j=1; j<s.length; j++) {

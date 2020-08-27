@@ -39,9 +39,9 @@
 .faq a.sharelink { text-decoration: none; color: #999; }
 .faq a.sharelink:hover { text-decoration: underline; color: #999; }
 
-.faq > .qa > h3::after { content: ' ▾'; color: rgba(0, 0, 0, 0.3); }
-.faq > .qa > h3:hover::after { content: " ▴"; color: rgba(0, 0, 0, 0.5); }
-.faq > .qa.collapsed > h3::after { content: " ▾"; color: rgba(0, 0, 0, 0.3); }
+.faq > .qa.collapsible > h3::after { content: ' ▾'; color: rgba(0, 0, 0, 0.3); }
+.faq > .qa.collapsible > h3:hover::after { content: " ▴"; color: rgba(0, 0, 0, 0.5); }
+.faq > .qa.collapsed > h3::after { content: " ▴"; color: rgba(0, 0, 0, 0.3); }
 .faq > .qa.collapsed > h3:hover::after { content: " ▾"; color: rgba(0, 0, 0, 0.5); }
 
 .faq > input.search {

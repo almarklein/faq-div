@@ -19,7 +19,7 @@
 
 <h1>FAQs 1</h1>
 
-<div class='faq-start'></div>
+<div class='faq-start' data-collapse=false></div>
 
     <h3>question 1</h3>
     <p>meh</p>
@@ -28,9 +28,8 @@
 
 <div class='faq-end'></div>
 
-<div class='faq' data-email='fake-email@canpute.com'>
 <h1>FAQs 2</h1>
-
+<div class='faq' data-email='fake-email@canpute.com' data-search=true >
 
 <h2>General</h2>
 
@@ -86,6 +85,14 @@
     background: #ddf;
 }
 </style>
+
+
+<h1>Options</h1>
+Options can be set by using the data- field in the html element.
+
+* data-search: set to "false" to hide the search element. Default is "true".
+* data-collapse: set to "false" to show q&a items uncollapsed. Default is "true".
+* data-email: set to an email addres to display the adres when user uses search.
 
 </body>
 </html>
