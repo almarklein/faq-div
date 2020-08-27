@@ -111,6 +111,137 @@ function faq_this_div(ref_node, faq_id) {
     // We use the dataset feature: data-xx fields are available as config.xx
     var config = ref_node.dataset;
 
+    // Register this faq in the module-level dict
+    faqs[faq_id] = {"onhash": onhash};
+
+    // Prepare
+    var sections = [[null]];
+    var index = {};
+
+    // Create nodes for search
+    var search_node = document.createElement("input");
+    var search_info_node = document.createElement("div");
+    search_info_node.classList.add("search-info");
+    search_node.setAttribute("type", "text");
+    search_node.setAttribute("placeholder", config.searchPlaceholder || "search ...");  // 🔍
+    search_node.addEventListener("input", search);
+    search_node.className = "search";
+    if (config.search == 'false') {search_node.style.display = 'none';}
+
+    populate_sections();
+    build_index();
+    restructure();
+
+    // ----- rest is functions -----
+
+    function populate_sections() {
+        // Walk the DOM
+        var node = ref_node.children[0];
+        while (node) {
+            var node_type = node.nodeName.toLowerCase();
+            if (node_type == "h3") {
+                // Get hash for this question
+                var hash = '';
+                for (let c of node.innerText.toLowerCase().replace(new RegExp("\ ", 'g'), "-")) {
+                    if ("abcdefghijklmnopqrstuvwxyz_-".indexOf(c) >= 0) {
+                        hash = hash + c;
+                    }
+                }
+                // Make sure it is unique
+                var ori_hash = hash;
+                for (let j=1; j<1000; j++) {
+                    if (typeof index[hash] == 'undefined') {break; }
+                    else { hash = ori_hash + j; }
+                }
+                // Add to index and sections
+                index[hash] = {"hash": hash};
+                sections.push([hash, node]);
+            } else if (node_type == "h2" || node_type == "h1" || node_type == "hr") {
+                sections.push([null, node]);  // no hash
+            } else {
+                sections[sections.length-1].push(node);
+            }
+            node = node.nextElementSibling;
+        }
+    }
+
+    function build_index() {
+        for (let s of sections) {
+            let hash = s[0];
+            if (hash !== null) {
+                index[hash].headertext = s[1].innerText.toLowerCase();
+                index[hash].text = "";
+                for (let j=2; j<s.length; j++) {
+                    index[hash].text += s[j].innerText.toLowerCase() + "\n";
+                }
+            }
+        }
+    }
+
+    function restructure() {
+        // Clear
+        ref_node.innerHTML = "";
+        // Add search
+        ref_node.appendChild(search_node);
+        ref_node.appendChild(search_info_node);
+        // Add the sections
+        for (let s of sections) {
+            let hash = s[0];
+            if (hash !== null) {
+                // Prep qa wrapper node
+                var wrapper_node = document.createElement("div");
+                wrapper_node.classList.add("qa");
+                wrapper_node.setAttribute("id", hash);
+                // Add the h2 node plus p nodes, but tweak a bit
+                var header_node = s[1];
+                wrapper_node.appendChild(header_node);
+                for (let j=2; j<s.length; j++) { wrapper_node.appendChild(s[j]); }
+                // Add link
+                var link_node = document.createElement("a");
+                link_node.innerHTML = " ¶";
+                link_node.className = "qalink";
+                link_node.setAttribute("href", "#" + faq_id + ":" + hash);
+                header_node.appendChild(link_node);
+                // Collapsable?
+                if (config.collapse != "false") {
+                    wrapper_node.classList.add("collapsible");
+                    wrapper_node.classList.add("collapsed");
+                    header_node.setAttribute("onclick", "faqthis.toggle(this);");
+                }
+                // Done
+                ref_node.appendChild(wrapper_node);
+                index[hash].node = wrapper_node;
+            } else {
+                // Just add the original nodes
+                for (let j=1; j<s.length; j++) {
+                    ref_node.appendChild(s[j]);
+                }
+            }
+        }
+    }
+
+    function clear_search_results () {
+        var nodes = [];  // First collect nodes, then remove. Otherwise it wont work.
+        for (let node of ref_node.getElementsByClassName('qa searchresult')) {
+            nodes.push(node);
+        }
+        for (let node of nodes) {
+            ref_node.removeChild(node);
+        }
+    }
+
+    function onhash(hash) {
+        var qa = index[hash];
+        if (qa) {
+            qa.node.classList.remove("hidden");
+            qa.node.classList.remove("collapsed");
+            highlight_element(qa.node);
+        } else if (hash) {
+            search_node.value = hash.replace("-", " ");
+            search();
+        }
+    }
+
     function search() {
         var key = "ljbsdfaljhsbdkey"; // Can identify code from this
         // Get search text (our "needle"), in parts
@@ -210,132 +341,6 @@ function faq_this_div(ref_node, faq_id) {
         }
     }  // end of search()
 
-    function clear_search_results () {
-        var nodes = [];  // First collect nodes, then remove. Otherwise it wont work.
-        for (let node of ref_node.getElementsByClassName('qa searchresult')) {
-            nodes.push(node);
-        }
-        for (let node of nodes) {
-            ref_node.removeChild(node);
-        }
-    }
-
-    function onhash(hash) {
-        var qa = index[hash];
-        if (qa) {
-            qa.node.classList.remove("hidden");
-            qa.node.classList.remove("collapsed");
-            highlight_element(qa.node);
-        } else {
-            search_node.value = hash.replace("-", " ");
-            search();
-        }
-    }
-
-    // Collect each h3 with following p's (or ul's)
-
-    // Prepare
-    var sections = [[null]];
-    var index = {};
-    faqs[faq_id] = {"onhash": onhash};
-
-    // Walk the DOM
-    var node = ref_node.children[0];
-    while (node) {
-        var node_type = node.nodeName.toLowerCase();
-        if (node_type == "h3") {
-            // Get hash for this question
-            var hash = '';
-            for (let c of node.innerText.toLowerCase().replace(new RegExp("\ ", 'g'), "-")) {
-                if ("abcdefghijklmnopqrstuvwxyz_-".indexOf(c) >= 0) {
-                    hash = hash + c;
-                }
-            }
-            // Make sure it is unique
-            var ori_hash = hash;
-            for (let j=1; j<1000; j++) {
-                if (typeof index[hash] == 'undefined') {break; }
-                else { hash = ori_hash + j; }
-            }
-            // Add to index and sections
-            index[hash] = {"hash": hash};
-            sections.push([hash, node]);
-        } else if (node_type == "h2" || node_type == "h1" || node_type == "hr") {
-            sections.push([null, node]);  // no hash
-        } else {
-            sections[sections.length-1].push(node);
-        }
-        node = node.nextElementSibling;
-    }
-
-    // Build index
-    for (let s of sections) {
-        let hash = s[0];
-        if (hash !== null) {
-            index[hash].headertext = s[1].innerText.toLowerCase();
-            index[hash].text = "";
-            for (let j=2; j<s.length; j++) {
-                index[hash].text += s[j].innerText.toLowerCase() + "\n";
-            }
-        }
-    }
-
-
-    // Clear the div
-    ref_node.innerHTML = "";
-
-    // Add search bar
-    //var search_wrapper_node = document.createElement("div");
-    //search_wrapper_node.className = "search-container";
-    var search_node = document.createElement("input");
-    var search_info_node = document.createElement("div");
-    search_info_node.classList.add("search-info");
-    search_node.setAttribute("type", "text");
-    search_node.setAttribute("placeholder", config.searchPlaceholder || "search ...");  // 🔍
-    search_node.addEventListener("input", search);
-    search_node.className = "search";
-    //search_wrapper_node.appendChild(search_node);
-    //ref_node.appendChild(search_wrapper_node);
-    ref_node.appendChild(search_node);
-    ref_node.appendChild(search_info_node);
-
-    if (config.search == 'false') {search_node.style.display = 'none';}
-
-
-    // Write back the sections
-    for (let s of sections) {
-        let hash = s[0];
-        if (hash !== null) {
-            // Prep qa wrapper node
-            var wrapper_node = document.createElement("div");
-            wrapper_node.classList.add("qa");
-            wrapper_node.setAttribute("id", hash);
-            // Add the h2 node plus p nodes, but tweak a bit
-            var header_node = s[1];
-            wrapper_node.appendChild(header_node);
-            for (let j=2; j<s.length; j++) { wrapper_node.appendChild(s[j]); }
-            // Add link
-            var link_node = document.createElement("a");
-            link_node.innerHTML = " ¶";
-            link_node.className = "qalink";
-            link_node.setAttribute("href", "#" + faq_id + ":" + hash);
-            header_node.appendChild(link_node);
-            // Collapsable?
-            if (config.collapse != "false") {
-                wrapper_node.classList.add("collapsible");
-                wrapper_node.classList.add("collapsed");
-                header_node.setAttribute("onclick", "faqthis.toggle(this);");
-            }
-            // Done
-            ref_node.appendChild(wrapper_node);
-            index[hash].node = wrapper_node;
-        } else {
-            // Just add the original nodes
-            for (let j=1; j<s.length; j++) {
-                ref_node.appendChild(s[j]);
-            }
-        }
-    }
 }  // end of faq_this_div()
 
 // Set global
