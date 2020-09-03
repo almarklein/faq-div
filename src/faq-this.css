@@ -7,16 +7,11 @@
     max-width: 800px;
     padding: 0.5em 1em;
     margin: 1em 0;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    border: 1px solid #ddd;
-    background: rgba(0, 0, 0, 0.0);
-    transition: box-shadow 0.5s, background-color 0.5s;
+    border-radius: 2px;
+    border: 1px solid rgba(128, 128, 128, 0.5);
     overflow-y: auto;
 }
 .faq > .qa.collapsed {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    background: rgba(127, 127, 127, 0.05);
     overflow-y: hidden;
 }
 .faq > .qa.collapsed > * {
@@ -25,13 +20,7 @@
 .faq > .qa.collapsed > h3 {
     display: block;
 }
-
-.faq > .qa.highlight {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-}
-
 .faq > .qa > h3 {
-    margin-top: 0;
     cursor: pointer;
     margin: 0;
 }
@@ -41,31 +30,33 @@
     -ms-user-select: none;
     user-select: none;
     text-decoration: none;
+    font-size: 0.8em;
     color: rgba(128,128,128,0.0);
+    transition: color 0.5s;
 }
-.faq > .qa > h3:hover a.qalink {
-    color: rgba(128,128,128,0.5);
-}
-.faq > .qa > h3 > a.qalink:hover { color: rgba(128,128,128,1.0); }
+.faq > .qa > h3:hover > a.qalink { color: rgba(128,128,128,0.3); }
+.faq > .qa > h3 > a.qalink:hover { color: rgba(128,128,128,0.5); }
+.faq > .qa.highlight > h3 > a.qalink { color: rgba(128,128,128,1.0); }
 
-.faq > .qa.collapsible > h3::before { content: '▴ '; color: rgba(0, 0, 0, 0.3); }
-.faq > .qa.collapsible > h3:hover::before { content: "▴ "; color: rgba(0, 0, 0, 0.5); }
-.faq > .qa.collapsed > h3::before { content: "▾ "; color: rgba(0, 0, 0, 0.3); }
-.faq > .qa.collapsed > h3:hover::before { content: "▾ "; color: rgba(0, 0, 0, 0.5); }
+.faq > .qa.collapsible > h3::before { content: '▴ '; color: rgba(128, 128, 128, 0.5); }
+.faq > .qa.collapsible > h3:hover::before { color: rgba(128, 128, 128, 0.8); }
+.faq > .qa.collapsed > h3::before { content: "▾ "; color: rgba(128, 128, 128, 0.5); }
+.faq > .qa.collapsed > h3:hover::before { color: rgba(128, 128, 128, 0.8); }
 
 .faq > input.search {
     box-sizing: border-box;
     width: 100%;
     max-width: 800px;
-    border-radius: 4px;
-    border: 1px solid #aaa;
+    border-radius: 2px;
+    border: 1px solid rgba(128, 128, 128, 0.5);
     font-size: 120%;
     padding: 0.5em;
     margin: 0.5em 0;
+    transition: border-color 0.2s;
 }
 .faq > input.search:focus {
     outline: none;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(128, 128, 128, 0.9);
 }
 .faq > .search-info {
     font-style: italic;

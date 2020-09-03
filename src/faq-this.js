@@ -123,7 +123,7 @@ function faq_this_div(ref_node, faq_id) {
     var search_info_node = document.createElement("div");
     search_info_node.classList.add("search-info");
     search_node.setAttribute("type", "text");
-    search_node.setAttribute("placeholder", config.searchPlaceholder || "search ...");  // 🔍
+    search_node.setAttribute("placeholder", config.searchPlaceholder || "Search FAQ ...");  // 🔍
     search_node.addEventListener("input", search);
     search_node.className = "search";
     if (config.search == 'false') {search_node.style.display = 'none';}
@@ -143,7 +143,7 @@ function faq_this_div(ref_node, faq_id) {
                 // Get hash for this question
                 var hash = '';
                 for (let c of node.innerText.toLowerCase().replace(new RegExp("\ ", 'g'), "-")) {
-                    if ("abcdefghijklmnopqrstuvwxyz_-".indexOf(c) >= 0) {
+                    if ("abcdefghijklmnopqrstuvwxyz_-0123456789".indexOf(c) >= 0) {
                         hash = hash + c;
                     }
                 }
@@ -198,9 +198,10 @@ function faq_this_div(ref_node, faq_id) {
                 for (let j=2; j<s.length; j++) { wrapper_node.appendChild(s[j]); }
                 // Add link
                 var link_node = document.createElement("a");
-                link_node.innerHTML = " ¶";
+                link_node.innerHTML = " 🔗";  // 🔗¶
                 link_node.className = "qalink";
                 link_node.setAttribute("href", "#" + faq_id + ":" + hash);
+                link_node.setAttribute("onclick", "event.stopPropagation();");
                 header_node.appendChild(link_node);
                 // Collapsable?
                 if (config.collapse != "false") {

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>FAQ-this</title>
+    <script src='faq-this.min.js'></script>
+</head>
+
+<body>
+
+
+
+
+
+<h2>Examples</h2>
+
+<script>
+
+async function show_example(name) {
+    console.log(name);
+    var url = name + ".html";
+    var el_source = document.getElementById('example-source');
+    var el_target = document.getElementById('example-target');
+    var a_new_tab = document.getElementById('a_new_tab');
+    // Set iframe source
+    el_target.src = url;
+    a_new_tab.href = url;
+    // Set target
+    if (!location.host) {
+        el_source.innerText = "Cannot show source when running without a server";
+    } else {
+        var r = await fetch(url);
+        if (r.ok) {
+            el_source.innerText = response.text();
+        }
+    }
+}
+
+var links = ["styling1", "styling2", "dark", "centered", "narrow", "configure"];
+
+function init_example_links() {
+    var el_links = document.getElementById('example-links');
+    el_links.innerHTML = "";
+    for (let name of links) {
+        let url = name + '.html';
+        let el = document.createElement("li");
+        let a1 = document.createElement("a");
+        a1.innerText = name;
+        a1.setAttribute("onclick", "window.show_example('" + name + "');");
+        el.appendChild(a1);
+        el_links.appendChild(el);
+    }
+}
+
+window.addEventListener("load", init_example_links);
+</script>
+
+<style>
+.examples {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.link-container {
+    flex-grow: 0;
+    margin: 0.5em;
+    margin: 5px;
+    padding-right: 2em;
+    font-size: 120%;
+}
+
+.source-container, .target-container {
+    box-sizing: border-box;
+    min-width: 300px;
+    flex-grow: 2;
+    flex-basis: 0;
+    margin: 5px;
+}
+#example-source, #example-target {
+    height: 60vh;
+}
+@media screen and (min-width: 440px) {
+    .source-container, .target-container {
+        min-width: 400px;
+    }
+}
+
+.source-container > span, .target-container > span {
+    display: block;
+    background: #555;
+    color: #fff;
+    font-size: 110%;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+    padding: 0.3em 1em;
+}
+
+#example-source, #example-target {
+    box-sizing: border-box;
+    margin: 0;
+    width: 100%;
+    border: 4px solid #555;
+    border-radius: 0 0 5px 5px;
+}
+
+#example-source {
+    font-family: "Ubuntu mono", "Lucida Console", "Courier new", monospace;
+    font-size: 80%;
+    padding: 1em;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+#example-links a {
+    color: #005;
+    cursor: pointer;
+}
+#example-links a:hover {
+    color: #000;
+}
+#a_new_tab {
+    color: #fff;
+}
+
+</style>
+
+<div class='examples'>
+    <div class='link-container'>
+        <ul id='example-links'>
+            <li><a onclick="show_example('styling1');">styling1</a></li>
+            <li><a onclick="show_example('styling2');">styling2</a></li>
+            <li>dark</li>
+        </ul>
+    </div>
+    <div class='source-container'>
+        <span>Source</span>
+        <div id='example-source'></div>
+    </div>
+    <div class='target-container'>
+        <span>View result (or open in <a id='a_new_tab' href='#' target='new'>new tab</a>)</span>
+        <iframe id='example-target'></iframe>
+    </div>
+</div>
+
+</body>
+</html>

@@ -7,19 +7,25 @@
         .faq-this div.qa-container.hiddenanswer > * {
             display: block;
         }
+        body {
+            background: #def;
+        }
     </style>
     <link rel="stylesheet" href="faq-this.minxxxx.css">
     <script src='faq-this.min.js'></script>
+
 </head>
 
 <body>
+
+
 
 <div class='faq-start'></div>
 <div class='faq-end'></div>
 
 <h1>FAQs 1</h1>
 
-<div class='faq-start' data-collapse=false data-search-placeholder="zoeken ..."></div>
+<div class='faq-start'></div>
 
     <h3>question 1</h3>
     <p>meh</p>
@@ -29,7 +35,7 @@
 <div class='faq-end'></div>
 
 <h1>FAQs 2</h1>
-<div class='faq' data-search-info="Found COUNT results ... you could <a href='mailto:fake-email@canpute.com?subject=SEARCH'>ask us</a>!" data-search=true >
+<div class='faq'>
 
 <h2>General</h2>
 
@@ -56,48 +62,4 @@
     <p>see above ;)</p>
 </div>
 
-<style>
-/* Custimizations! */
-
-/* Very easy to target the elements containging the question. */
-.faq h3 {
-    color: red;
-}
-
-.faq .search {
-    background: #afa;
-}
-
-.faq .search-info {
-    font-size: 70%;
-}
-
-/* target a question + answer item  */
-.faq .qa {
-    border-radius: 12px;
-}
-
-/* when it is collapsed (answer is hidden) */
-.faq .qa.collapsed {
-    border-radius: 20px;
-}
-/* when the item pops up as a search result */
-.faq .qa.searchresult {
-    background: #ddf;
-}
-</style>
-
-
-<h1>Options</h1>
-Options can be set by using the data- field in the html element.
-
-* data-collapse: set to "false" to show q&a items uncollapsed. Default is "true".
-* data-search: set to "false" to hide the search element. Default is "true".
-* data-search-placeholder: custimize the placeholder text in the search input box.
-* data-search-info: this string is displayed when the user does a search.
-  The text "COUNT" is replaced with the search count, and the text "SEARCH" is replaced with
-  the current text in the search box. You can use this to customize for other languages,
-  but also to e.g. display a mailto link.
-
-</body>
 </html>
