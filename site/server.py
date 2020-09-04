@@ -58,6 +58,7 @@ def collect_assets():
     # Collect
     this_dir = os.path.dirname(__file__)
     assets = {}
+    example_names = []
     for subdir in ("", "img", "examples"):
         for fname in os.listdir(os.path.join(this_dir, subdir)):
             filename = os.path.join(this_dir, subdir, fname)
@@ -66,13 +67,18 @@ def collect_assets():
             elif fname.endswith((".md", ".html", ".js", ".css")):
                 with open(filename, "rb") as f:
                     assets[fname] = f.read().decode()
+                if subdir == "examples" and fname.endswith(".html"):
+                    example_names.append(fname[:-5])
             elif fname.endswith((".png", ".jpg")):
                 with open(filename, "rb") as f:
                     assets[fname] = f.read()
 
     # Post processing
     faq_html = markdown.markdown(md_highlight(assets["faq.md"]), extensions=[])
-    assets["index.html"] = assets["index.html"].replace("FAQ_HERE", faq_html)
+    index_html = assets["index.html"]
+    index_html = index_html.replace("FAQ_HERE", faq_html)
+    index_html = index_html.replace("EXAMPLE_NAMES", ", ".join(repr(x) for x in sorted(example_names)))
+    assets["index.html"] = index_html
 
     return assets
 
