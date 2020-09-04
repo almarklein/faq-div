@@ -2,86 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>FAQ-div</title>
+    <title>FAQ-div example</title>
     <script src='faq-div.min.js'></script>
 </head>
-
 <body>
 
-<div class='faq-start'></div>
-<div class='faq-end'></div>
+<h1>Demonstrating configuring the FAQ</h1>
 
-<h1>FAQs 1</h1>
+Turning off collapsing and the link icon, and setting the search placeholder string.
 
-<div class='faq-start' data-collapse=false data-search-placeholder="zoeken ..."></div>
+<div class='faq-start'
+    data-collapse=false
+    data-link=false
+    data-search-placeholder='What do you want to know?'
+></div>
 
-    <h3>question 1</h3>
-    <p>meh</p>
-    <h3>question 2</h3>
-    <p>boh</p>
+<h3>What is that placeholder text people always use?</h2>
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum
+</p>
 
-<div class='faq-end'></div>
+<h3>What is the airspeed velocity of an unladen swallow?</h2>
+<p>Roughly 11 meters per second.</p>
 
-<h1>FAQs 2</h1>
-<div class='faq' data-search-info="Found COUNT results ... you could <a href='mailto:fake-email@canpute.com?subject=SEARCH'>ask us</a>!" data-search=true >
-
-<h2>General</h2>
-
-    <h3>How do fish swim?</h3>
-
-    <p>They use their fins</p>
-
-    <h3>How do dogs bark?</h3>
-
-    <p>Woef!</p>
-
-<h2>Support</h2>
-
-    <h3>What browsers are supported?</h3>
-
-    <p>Supported browsers include Firefox, Chrome, Safari, Edge, and their mobile counterparts.</p>
-
-    <h3>What if something is broken?</h3>
-
-    <p>File an issue.</p>
-    <p>Or ask via the email address that you received when you purchased a license.</p>
-
-    <h3>question 2</h3>
-    <p>see above ;)</p>
-</div>
-
-<style>
-/* Custimizations! */
-
-/* Very easy to target the elements containging the question. */
-.faq h3 {
-    color: red;
-}
-
-.faq .search {
-    background: #afa;
-}
-
-.faq .search-info {
-    font-size: 70%;
-}
-
-/* target a question + answer item  */
-.faq .qa {
-    border-radius: 12px;
-    background: #fff;
-}
-
-/* when it is collapsed (answer is hidden) */
-.faq .qa.collapsed {
-    border-radius: 20px;
-    background: #eee;
-}
-/* when the item pops up as a search result */
-.faq .qa.searchresult {
-    background: #ddf;
-}
-</style>
+<h3>What is the meaning of life?</h2>
+<p>42</p>
 
 
 </body>

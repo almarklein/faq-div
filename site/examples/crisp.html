@@ -8,15 +8,19 @@
 <body>
 
 <style>
-body {
-    background: #000;
-    color: #fff;
+.faq > .qa {
+    border-radius: 3px;
+    border: 1px solid #888;
+    background: #fff;
+    transition: background-color 0.5s;
+}
+.faq > .qa.collapsed {
+    border: 1px dotted #888;
+    background: #eee;
 }
 </style>
 
-<h1>A FAQ with a dark theme</h1>
-
-Note how styling is applied except swapping the front and back colors.
+<h1>Anbother FAQ styling example</h1>
 
 <div class='faq-start'></div>
 
@@ -36,6 +40,5 @@ Note how styling is applied except swapping the front and back colors.
 
 <h3>What is the meaning of life?</h2>
 <p>42</p>
-
 </body>
 </html>
