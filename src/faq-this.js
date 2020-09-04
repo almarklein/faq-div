@@ -38,12 +38,12 @@ function init() {
         if (el.children.length) {continue;}
         el.classList.add("faq");
         let nodes = [];
-        let node = el.nextElementSibling;
-        while (node && !node.classList.contains("faq-start") && !node.classList.contains("faq-end") && !node.classList.contains("faq")) {
+        let node = el.nextSibling;
+        while (node && !(node.classList && (node.classList.contains("faq-start") || node.classList.contains("faq-end") || node.classList.contains("faq")))) {
             nodes.push(node);
-            node = node.nextElementSibling;
+            node = node.nextSibling;
         }
-        for (let node of nodes) {el.appendChild(node);}
+        for (let node of nodes) {el.append(node);}
     }
     // Turn faq divs into a proper faq :)
     var count = "";
@@ -159,9 +159,22 @@ function faq_this_div(ref_node, faq_id) {
             } else if (node_type == "h2" || node_type == "h1" || node_type == "hr") {
                 sections.push([null, node]);  // no hash
             } else {
-                sections[sections.length-1].push(node);
+                let section = sections[sections.length-1];
+                if (node.classList)  { // Is an element (e.g. <p> or <img>)
+                    section.push(node);
+                } else if (node.nodeName == "#text") {
+                    // Support for text nodes -> wrap in a span
+                    let text = node.textContent.trim();
+                    if (text) {
+                        if (section[section.length-1].nodeName.toLowerCase() != "span") {
+                            section.push(document.createElement("span"));
+                            if (section.length == 3) { text = "\n" + text;}
+                        }
+                        section[section.length-1].innerText += text + " ";
+                    }
+                }
             }
-            node = node.nextElementSibling;
+            node = node.nextSibling;
         }
     }
 
@@ -169,10 +182,10 @@ function faq_this_div(ref_node, faq_id) {
         for (let s of sections) {
             let hash = s[0];
             if (hash !== null) {
-                index[hash].headertext = s[1].innerText.toLowerCase();
+                index[hash].headertext = s[1].textContent.toLowerCase();
                 index[hash].text = "";
                 for (let j=2; j<s.length; j++) {
-                    index[hash].text += s[j].innerText.toLowerCase() + "\n";
+                    index[hash].text += s[j].textContent.toLowerCase() + "\n";
                 }
             }
         }
@@ -195,14 +208,17 @@ function faq_this_div(ref_node, faq_id) {
                 // Add the h2 node plus p nodes, but tweak a bit
                 var header_node = s[1];
                 wrapper_node.appendChild(header_node);
-                for (let j=2; j<s.length; j++) { wrapper_node.appendChild(s[j]); }
-                // Add link
-                var link_node = document.createElement("a");
-                link_node.innerHTML = " 🔗";  // 🔗¶
-                link_node.className = "qalink";
-                link_node.setAttribute("href", "#" + faq_id + ":" + hash);
-                link_node.setAttribute("onclick", "event.stopPropagation();");
-                header_node.appendChild(link_node);
+                for (let j=2; j<s.length; j++) { wrapper_node.append(s[j]); }
+                // Add link?
+                if (config.link != "false") {
+                    var link_node = document.createElement("a");
+                    link_node.innerHTML = " 🔗";  // 🔗¶
+                    link_node.className = "qalink";
+                    link_node.setAttribute("href", "#" + faq_id + ":" + hash);
+                    link_node.setAttribute("onclick", "event.stopPropagation();");
+                    index[hash].link_node = link_node;
+                    header_node.appendChild(link_node);
+                }
                 // Collapsable?
                 if (config.collapse != "false") {
                     wrapper_node.classList.add("collapsible");
@@ -215,7 +231,7 @@ function faq_this_div(ref_node, faq_id) {
             } else {
                 // Just add the original nodes
                 for (let j=1; j<s.length; j++) {
-                    ref_node.appendChild(s[j]);
+                    ref_node.append(s[j]);  // not appendChild
                 }
             }
         }
@@ -237,8 +253,9 @@ function faq_this_div(ref_node, faq_id) {
             qa.node.classList.remove("hidden");
             qa.node.classList.remove("collapsed");
             highlight_element(qa.node);
+            if (qa.link_node) {qa.link_node.focus();}
         } else if (hash) {
-            search_node.value = hash.replace("-", " ");
+            search_node.value = hash.replace(new RegExp("-", 'g'), " ");
             search();
         }
     }

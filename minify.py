@@ -2,7 +2,8 @@
 Python script to minify the code and put it into a single .js file.
 """
 
-import time
+import os
+import sys
 
 from jsmin import jsmin
 
@@ -143,7 +144,12 @@ def main():
 if __name__ == "__main__":
     main()
 
-    # dev-more
-    while True:
-        time.sleep(1)
-        main()
+    os.chdir("site")
+    sys.path.insert(0, "")
+    import server
+
+    server.serve()
+    # # dev-more
+    # while True:
+    #     time.sleep(1)
+    #     main()

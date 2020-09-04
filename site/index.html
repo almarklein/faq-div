@@ -4,14 +4,154 @@
     <meta charset="utf-8">
     <title>FAQ-this</title>
     <script src='faq-this.min.js'></script>
+    <style>
+        body {
+            background: #fff;
+            font-family: "Lucida Sans Unicode", Verdana, sans-serif;
+            font-size: 108%;
+            line-height: 140%;
+            color: #06B;
+        }
+        h1, h2, h3, h4 {
+            color: #222;
+        }
+        h2 {
+            font-family: "Lucida Console", "Courier new", monospace;
+            font-size: 250%;
+            text-align: center;
+        }
+        pre.highlight {  /*pygments */
+            font-family: "Lucida Console", "Courier new", monospace;
+            font-size: 12px;
+            color: #444;
+            background: #fff;
+            border: 1px solid #dddddd;
+            padding: 0em 1em;
+        }
+        code {  /* from `xx`*/
+            background: #eee;
+            padding: 0.2em;
+        }
+    </style>
 </head>
-
 <body>
 
 
 
+<!------------------------------ HERO ----------------------------------------->
+<style>
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.hero h1 {
+    font-size: 300%;
+    margin: 1em;
+}
+.hero h1 > tt {
+    font-family: "Lucida Console", "Courier new", monospace;
+    color: #c00;
+}
+.hero img {
+    margin: 1em;
+    width: 256px;
+    flex-shrink: 0;
+}
+</style>
+
+<div class='hero'>
+    <img src='faqdiv.png'></img>
+    <h1>Turn any <tt>div</tt> into a <tt>FAQ</tt></h1>
+</div>
+
+<!------------------------------ HOW ----------------------------------------->
+<style>
+.how {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+.how > div {
+    text-align: center;
+    width: 256px;
+}
+.how > div > img {
+    width: 256px;
+}
+</style>
+
+<br /><br />
+<h2>How?</h2>
+
+<div class='how'>
+    <div>
+        <img src='div.png'></img>
+        <br>Write your code as you would with any Q&A.
+    </div>
+    <div>
+        <img src='2lines.png'></img>
+        <br>Add two lines.
+    </div>
+    <div>
+        <img src='faq.png'></img>
+        <br>Bam! A beautiful FAQ with powerful search, and more!
+    </div>
+</div>
+
+<!------------------------------ FEATURES ----------------------------------------->
+<style>
+    .features {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .features img {
+        margin: 1em;
+        width: 256px;
+        flex-shrink: 0;
+    }
+    .features > div {
+        margin: 1em;
+        width: 600px;
+        max-width: 600px;
+    }
+    .features .faq > .qa {
+        border-radius: 4px;
+        border: 1px solid #c00;
+    }
+</style>
+
+<br /><br />
+<h2>Features</h2>
+<div class='features'>
+    <div class='faq' data-search=false data-link=false>
+        <h3>SEO friendly</h3>
+        <p>The HTML source consists of headers and paragraphs, which is exactly what search engines use to crawl your website.</p>
+        <p>Using questions that people might actually Google for is an effective way to attract visitors.</p>
+        <h3>Powerful search</h3>
+        <p>A search bar is (optionally) added above the FAQ. It is backed by algorithms that sort results on different criteria, so that
+            your users always find what they're looking for.
+        </p>
+        <h3>Configurable</h3>
+        <p>Many features can be configured, e.g. turning off search or collapsing. All added texts can also be configured.
+        </p>
+        <h3>Style it</h3>
+        <p>By default, a cumbersome but effective styling is applied, which you can fully tweak to make your FAQ match the rest of your website.</p>
+        <h3>Links</h3>
+        <p>You (and your users) can easily create links to individual questions. You can even create a link for a particular search.</p>
+        <h3>Privacy</h3>
+        <p>Your FAQ does not rely on 3d party services which may track your website visitors.</p>
+        <h3>Tiny</h3>
+        <p>This lib is less than 10kb.</p>
 
 
+    </div>
+</div>
+
+
+<!------------------------------ EXAMPLES ----------------------------------------->
+<br /><br />
 <h2>Examples</h2>
 
 <script>
@@ -31,7 +171,8 @@ async function show_example(name) {
     } else {
         var r = await fetch(url);
         if (r.ok) {
-            el_source.innerText = response.text();
+            let text = await r.text();
+            el_source.innerText = text;//.replace(new RegExp("\ ", "g"), "&nbsp;");
         }
     }
 }
@@ -88,7 +229,7 @@ window.addEventListener("load", init_example_links);
 
 .source-container > span, .target-container > span {
     display: block;
-    background: #555;
+    background: #222;
     color: #fff;
     font-size: 110%;
     font-weight: bold;
@@ -100,16 +241,19 @@ window.addEventListener("load", init_example_links);
     box-sizing: border-box;
     margin: 0;
     width: 100%;
-    border: 4px solid #555;
+    border: 4px solid #222;
     border-radius: 0 0 5px 5px;
 }
 
 #example-source {
-    font-family: "Ubuntu mono", "Lucida Console", "Courier new", monospace;
-    font-size: 80%;
+    font-family: "Lucida Console", "Courier new", monospace;
+    font-size: 70%;
+    line-height: 120%;
+    white-space: pre;
     padding: 1em;
     overflow-x: auto;
     overflow-y: auto;
+    color: #444;
 }
 
 #example-links a {
@@ -143,5 +287,25 @@ window.addEventListener("load", init_example_links);
     </div>
 </div>
 
+<!------------------------------ FAQs ----------------------------------------->
+<style>
+.faqcontainer {
+    display: flex;
+        justify-content: center;
+}
+.faqcontainer .faq {
+    width: 800px;
+    max-width: 800px;
+}
+</style>
+
+<br/><br/>
+<h2>FAQs</h2>
+
+<div class='faqcontainer'>
+    <div class='faq'>FAQ_HERE</div>
+</div>
+
+<br /><br /><br />
 </body>
 </html>
