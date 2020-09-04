@@ -114,4 +114,4 @@ Yes, you could; FAQ-div is designed to deal with such scenarios.
 
 ### What if my content is injected after page load?
 
-No worries! You can trigger FAQ-div using `window.faqthis.init()`.
+No worries! You can trigger FAQ-div using `window.faqdiv.init()`.

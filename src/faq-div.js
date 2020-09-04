@@ -16,10 +16,10 @@ window.addEventListener("hashchange", when_hash_changes);
 
 function init() {
     // Include CSS
-    if (!document.getElementById("faq-this-css")) {
+    if (!document.getElementById("faq-div-css")) {
         let css_element = document.createElement('style');
         css_element.type = "text/css";
-        css_element.id = "faq-this-css";
+        css_element.id = "faq-div-css";
         css_element.innerText = CSS;
         let added = false;
         for (let child of document.head.children) {
@@ -223,7 +223,7 @@ function faq_this_div(ref_node, faq_id) {
                 if (config.collapse != "false") {
                     wrapper_node.classList.add("collapsible");
                     wrapper_node.classList.add("collapsed");
-                    header_node.setAttribute("onclick", "faqthis.toggle(this);");
+                    header_node.setAttribute("onclick", "faqdiv.toggle(this);");
                 }
                 // Done
                 ref_node.appendChild(wrapper_node);
@@ -362,4 +362,4 @@ function faq_this_div(ref_node, faq_id) {
 }  // end of faq_this_div()
 
 // Set global
-window.faqthis = {"version": version, "toggle": toggle, "init": init};
+window.faqdiv = {"version": version, "toggle": toggle, "init": init};

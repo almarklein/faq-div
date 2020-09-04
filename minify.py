@@ -9,7 +9,7 @@ from jsmin import jsmin
 
 
 preamble = """
-/* Copyright 2019-2020 Almar Klein. You need a license to use faq-this. */
+/* Copyright 2019-2020 Almar Klein. You need a license to use FAQ-div. */
 """.lstrip()
 
 
@@ -114,10 +114,10 @@ last_result = ""
 def main():
     global last_result
 
-    css_ori = open("src/faq-this.css", "rb").read().decode()
+    css_ori = open("src/faq-div.css", "rb").read().decode()
     css = minify_css(css_ori)
 
-    js_ori = open("src/faq-this.js", "rb").read().decode()
+    js_ori = open("src/faq-div.js", "rb").read().decode()
     js = minify_js(js_ori)
 
     total = (
@@ -137,7 +137,7 @@ def main():
         + f"={len(js_ori) + len(css_ori)} chars. Minified: {len(total)}"
     )
 
-    with open("site/faq-this.min.js", "wb") as f:
+    with open("site/faq-div.min.js", "wb") as f:
         f.write(total.encode())
 
 
