@@ -1,3 +1,7 @@
 site/faq-div.min.js
 *.pyc
 *.pyo
+.eslintrc.json
+package-lock.json
+package.json
+node_modules/

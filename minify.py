@@ -69,7 +69,7 @@ def rename_variabes_js(text):
                 in_something = "\n"
 
     # Some words are protected
-    protected = "CSS", "version"
+    protected = "css", "version"
     for word in protected:
         words_that_can_be_renamed.discard(word)
 
@@ -123,7 +123,7 @@ def main():
     total = (
         preamble
         + "(function() {\n"
-        + js.replace('CSS="";', f'CSS="{css}";\n')
+        + js.replace('css="";', f'css="{css}";\n')
         + "\n})();"
     )
 

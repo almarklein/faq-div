@@ -5,25 +5,25 @@
 // Alternatively, we hoist elements in between two divs which have classes "faq-start" and "faq-end", respectively.
 // The faq-start element functions as normal faq element from there.
 
-var version = "1.1";
-var CSS = "";
+var version = '1.1';
+var css = ""; // deliberate double qoutes here
 
 // dict of faqs objects
 var faqs = {};
 
-window.addEventListener("load", init);
-window.addEventListener("hashchange", when_hash_changes);
+window.addEventListener('load', init);
+window.addEventListener('hashchange', when_hash_changes);
 
-function init() {
+function init () {
     // Include CSS
-    if (!document.getElementById("faq-div-css")) {
+    if (!document.getElementById('faq-div-css')) {
         let css_element = document.createElement('style');
-        css_element.type = "text/css";
-        css_element.id = "faq-div-css";
-        css_element.innerText = CSS;
+        css_element.type = 'text/css';
+        css_element.id = 'faq-div-css';
+        css_element.innerText = css;
         let added = false;
         for (let child of document.head.children) {
-            if (child.nodeName.toLowerCase() == "link") {
+            if (child.nodeName.toLowerCase() == 'link') {
                 document.head.insertBefore(css_element, child);
                 added = true;
                 break;
@@ -33,24 +33,24 @@ function init() {
     }
     // Detect faq starts, turn into normal faq divs
     var starts = [];
-    for (let el of document.getElementsByClassName("faq-start")) {starts.push(el);}
+    for (let el of document.getElementsByClassName('faq-start')) {starts.push(el);}
     for (let el of starts) {
         if (el.children.length) {continue;}
-        el.classList.add("faq");
+        el.classList.add('faq');
         let nodes = [];
         let node = el.nextSibling;
-        while (node && !(node.classList && (node.classList.contains("faq-start") || node.classList.contains("faq-end") || node.classList.contains("faq")))) {
+        while (node && !(node.classList && (node.classList.contains('faq-start') || node.classList.contains('faq-end') || node.classList.contains('faq')))) {
             nodes.push(node);
             node = node.nextSibling;
         }
         for (let node of nodes) {el.append(node);}
     }
     // Turn faq divs into a proper faq :)
-    var count = "";
-    for (let el of document.getElementsByClassName("faq")) {
-        if (el.children.length && !el.classList.contains("initialized")) {
-            el.classList.add("initialized");
-            faq_this_div(el, "faq" + count);
+    var count = '';
+    for (let el of document.getElementsByClassName('faq')) {
+        if (el.children.length && !el.classList.contains('initialized')) {
+            el.classList.add('initialized');
+            faq_this_div(el, 'faq' + count);
             count = Number(count) + 1;
         }
     }
@@ -61,7 +61,7 @@ function init() {
 function when_hash_changes() {
     // Delegate to the faq to which this applies
     let hash = location.hash;
-    let i = hash.indexOf(":");
+    let i = hash.indexOf(':');
     if (i > 0 && hash.startsWith('#faq')) {
         let faq_id = hash.slice(1, i);
         let faq = faqs[faq_id];
@@ -72,19 +72,19 @@ function when_hash_changes() {
 
 var _highlighting = {};
 function highlight_element(el, step) {
-    if (typeof step == "undefined") { step = 0; }
+    if (typeof step == 'undefined') { step = 0; }
     var wait = 1;
     if (step == 0) {
-        el.style.transition = "none";
+        el.style.transition = 'none';
     } else if (step != _highlighting[el.id]) {
         return;
     } else if (step == 1) {
-        el.classList.add("highlight");
+        el.classList.add('highlight');
     } else if (step == 2) {
         el.style.transition = null;
         wait = 1000;
     } else {
-        el.classList.remove("highlight");
+        el.classList.remove('highlight');
         delete _highlighting[el.id];
         return;
     }
@@ -96,11 +96,11 @@ function highlight_element(el, step) {
 function toggle(headernode) {
     // Global function to toggle the visibility of a q/a.
     var node = headernode.parentNode; //e.target.parentNode;
-    node.classList.remove("hidden");
-    if (node.classList.contains("collapsed")) {
-        node.classList.remove("collapsed");
-    } else if (node.classList.contains("collapsible")) {
-        node.classList.add("collapsed");
+    node.classList.remove('hidden');
+    if (node.classList.contains('collapsed')) {
+        node.classList.remove('collapsed');
+    } else if (node.classList.contains('collapsible')) {
+        node.classList.add('collapsed');
     }
 }
 
@@ -112,20 +112,20 @@ function faq_this_div(ref_node, faq_id) {
     var config = ref_node.dataset;
 
     // Register this faq in the module-level dict
-    faqs[faq_id] = {"onhash": onhash};
+    faqs[faq_id] = {'onhash': onhash};
 
     // Prepare
     var sections = [[null]];
     var index = {};
 
     // Create nodes for search
-    var search_node = document.createElement("input");
-    var search_info_node = document.createElement("div");
-    search_info_node.classList.add("search-info");
-    search_node.setAttribute("type", "text");
-    search_node.setAttribute("placeholder", config.searchPlaceholder || "Search FAQ ...");  // 🔍
-    search_node.addEventListener("input", search);
-    search_node.className = "search";
+    var search_node = document.createElement('input');
+    var search_info_node = document.createElement('div');
+    search_info_node.classList.add('search-info');
+    search_node.setAttribute('type', 'text');
+    search_node.setAttribute('placeholder', config.searchPlaceholder || 'Search FAQ ...');  // 🔍
+    search_node.addEventListener('input', search);
+    search_node.className = 'search';
     if (config.search == 'false') {search_node.style.display = 'none';}
 
     populate_sections();
@@ -139,11 +139,11 @@ function faq_this_div(ref_node, faq_id) {
         var node = ref_node.children[0];
         while (node) {
             var node_type = node.nodeName.toLowerCase();
-            if (node_type == "h3") {
+            if (node_type == 'h3') {
                 // Get hash for this question
                 var hash = '';
-                for (let c of node.innerText.toLowerCase().replace(new RegExp("\ ", 'g'), "-")) {
-                    if ("abcdefghijklmnopqrstuvwxyz_-0123456789".indexOf(c) >= 0) {
+                for (let c of node.innerText.toLowerCase().replace(new RegExp(' ', 'g'), '-')) {
+                    if ('abcdefghijklmnopqrstuvwxyz_-0123456789'.indexOf(c) >= 0) {
                         hash = hash + c;
                     }
                 }
@@ -154,25 +154,13 @@ function faq_this_div(ref_node, faq_id) {
                     else { hash = ori_hash + j; }
                 }
                 // Add to index and sections
-                index[hash] = {"hash": hash};
+                index[hash] = {'hash': hash};
                 sections.push([hash, node]);
-            } else if (node_type == "h2" || node_type == "h1" || node_type == "hr") {
+            } else if (node_type == 'h2' || node_type == 'h1' || node_type == 'hr') {
                 sections.push([null, node]);  // no hash
             } else {
                 let section = sections[sections.length-1];
-                if (node.classList)  { // Is an element (e.g. <p> or <img>)
-                    section.push(node);
-                } else if (node.nodeName == "#text") {
-                    // Support for text nodes -> wrap in a span
-                    let text = node.textContent.trim();
-                    if (text) {
-                        if (section[section.length-1].nodeName.toLowerCase() != "span") {
-                            section.push(document.createElement("span"));
-                            if (section.length == 3) { text = "\n" + text;}
-                        }
-                        section[section.length-1].innerText += text + " ";
-                    }
-                }
+                section.push(node);
             }
             node = node.nextSibling;
         }
@@ -183,9 +171,9 @@ function faq_this_div(ref_node, faq_id) {
             let hash = s[0];
             if (hash !== null) {
                 index[hash].headertext = s[1].textContent.toLowerCase();
-                index[hash].text = "";
+                index[hash].text = '';
                 for (let j=2; j<s.length; j++) {
-                    index[hash].text += s[j].textContent.toLowerCase() + "\n";
+                    index[hash].text += s[j].textContent.toLowerCase() + '\n';
                 }
             }
         }
@@ -193,7 +181,7 @@ function faq_this_div(ref_node, faq_id) {
 
     function restructure() {
         // Clear
-        ref_node.innerHTML = "";
+        ref_node.innerHTML = '';
         // Add search
         ref_node.appendChild(search_node);
         ref_node.appendChild(search_info_node);
@@ -202,37 +190,41 @@ function faq_this_div(ref_node, faq_id) {
             let hash = s[0];
             if (hash !== null) {
                 // Prep qa wrapper node
-                var wrapper_node = document.createElement("div");
-                wrapper_node.classList.add("qa");
-                wrapper_node.setAttribute("id", hash);
-                // Add the h2 node plus p nodes, but tweak a bit
+                let wrapper_node = document.createElement('div');
+                wrapper_node.classList.add('qa');
+                wrapper_node.setAttribute('id', hash);
+                // Add the question node (always h3)
                 var header_node = s[1];
                 wrapper_node.appendChild(header_node);
-                for (let j=2; j<s.length; j++) { wrapper_node.append(s[j]); }
+                // Add answer nodes (can be any nodes, also TextNodes)
+                let answer_node = document.createElement('div');
+                answer_node.classList.add('answer');
+                for (let j=2; j<s.length; j++) { answer_node.append(s[j]); }
+                wrapper_node.appendChild(answer_node);
                 // Add link?
-                if (config.link != "false") {
-                    var link_node = document.createElement("a");
-                    link_node.innerHTML = " 🔗";  // 🔗¶
-                    link_node.className = "qalink";
-                    link_node.setAttribute("href", "#" + faq_id + ":" + hash);
-                    link_node.setAttribute("onclick", "event.stopPropagation();");
+                if (config.link != 'false') {
+                    var link_node = document.createElement('a');
+                    link_node.innerHTML = ' 🔗';  // 🔗¶
+                    link_node.className = 'qalink';
+                    link_node.setAttribute('href', '#' + faq_id + ':' + hash);
+                    link_node.setAttribute('onclick', 'event.stopPropagation();');
                     index[hash].link_node = link_node;
                     header_node.appendChild(link_node);
                 }
                 // Collapsable?
-                if (config.collapse != "false") {
-                    wrapper_node.classList.add("collapsible");
-                    wrapper_node.classList.add("collapsed");
-                    header_node.setAttribute("onclick", "faqdiv.toggle(this);");
+                if (config.collapse != 'false') {
+                    wrapper_node.classList.add('collapsible');
+                    wrapper_node.classList.add('collapsed');
+                    header_node.setAttribute('onclick', 'faqdiv.toggle(this);');
                 }
                 // Done
                 ref_node.appendChild(wrapper_node);
                 index[hash].node = wrapper_node;
             } else {
-                // Just add the original nodes
-                for (let j=1; j<s.length; j++) {
-                    ref_node.append(s[j]);  // not appendChild
-                }
+                // In-between content
+                let in_between = document.createElement('div');
+                for (let j=1; j<s.length; j++) { in_between.append(s[j]); }
+                ref_node.appendChild(in_between);
             }
         }
     }
@@ -250,32 +242,33 @@ function faq_this_div(ref_node, faq_id) {
     function onhash(hash) {
         var qa = index[hash];
         if (qa) {
-            qa.node.classList.remove("hidden");
-            qa.node.classList.remove("collapsed");
+            qa.node.classList.remove('hidden');
+            qa.node.classList.remove('collapsed');
             highlight_element(qa.node);
             if (qa.link_node) {qa.link_node.focus();}
         } else if (hash) {
-            search_node.value = hash.replace(new RegExp("-", 'g'), " ");
+            search_node.value = hash.replace(new RegExp('-', 'g'), ' ');
             search();
         }
     }
 
     function search() {
-        var key = "ljbsdfaljhsbdkey"; // Can identify code from this
+        var key = 'ljbsdfaljhsbdkey'; // Can identify code from this
+        key;
         // Get search text (our "needle"), in parts
-        var fullneedle = search_node.value.toLowerCase().replace(",", "");
+        var fullneedle = search_node.value.toLowerCase().replace(',', '');
         var parts = [];
-        for (let p of fullneedle.split(" ")) {
+        for (let p of fullneedle.split(' ')) {
             if (p.length > 0) { parts.push(p); }
         }
         // Collect each consecutive combination of words
         // Ignore certain "sentences" (mind the surrounding space)
-        var ignores = " how can i , and , or , is ";
+        var ignores = ' how can i , and , or , is ';
         var needles = [];
         for (let i1=0; i1<=parts.length; i1++) {
             for (let i2=i1+1; i2<=parts.length; i2++) {
-                let needle = parts.slice(i1, i2).join(" ");
-                if (ignores.indexOf(" " + needle + " ") < 0) { needles.push([i2-i1, needle]); }
+                let needle = parts.slice(i1, i2).join(' ');
+                if (ignores.indexOf(' ' + needle + ' ') < 0) { needles.push([i2-i1, needle]); }
             }
         }
         needles.sort(function (a, b) {return b[0] - a[0];});
@@ -283,11 +276,11 @@ function faq_this_div(ref_node, faq_id) {
         if (needles.length == 0) {
             // No search - show all
             clear_search_results();
-            search_info_node.innerHTML = "";
+            search_info_node.innerHTML = '';
             for (let hash in index) {
                 let qa = index[hash];
                 qa.node.classList.remove('hidden');
-                if (qa.node.classList.contains("collapsible")) {
+                if (qa.node.classList.contains('collapsible')) {
                     qa.node.classList.add('collapsed');
                 }
             }
@@ -354,12 +347,12 @@ function faq_this_div(ref_node, faq_id) {
                     }
                 }
             }
-            let info = config.searchInfo || "COUNT results";
-            search_info_node.innerHTML = info.replace("COUNT", search_count).replace("SUBJECT", search_node.value) + "<br>";
+            let info = config.searchInfo || 'COUNT results';
+            search_info_node.innerHTML = info.replace('COUNT', search_count).replace('SUBJECT', search_node.value) + '<br>';
         }
     }  // end of search()
 
 }  // end of faq_this_div()
 
 // Set global
-window.faqdiv = {"version": version, "toggle": toggle, "init": init};
+window.faqdiv = {'version': version, 'toggle': toggle, 'init': init};

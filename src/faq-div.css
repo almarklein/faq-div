@@ -11,20 +11,17 @@
     border: 1px solid rgba(128, 128, 128, 0.5);
     overflow-y: auto;
 }
-.faq > .qa.collapsed {
-    overflow-y: hidden;
+.faq > .qa > .answer {
+    margin-top: 0.3em;
+    overflow: hidden;
 }
-.faq > .qa.collapsed > * {
+.faq > .qa.collapsed > .answer {
     display: none;
-}
-.faq > .qa.collapsed > h3 {
-    display: block;
 }
 .faq > .qa > h3 {
     cursor: pointer;
     margin: 0;
 }
-
 .faq .qa > h3 > a.qalink {
     -webkit-user-select: none;
     -ms-user-select: none;
