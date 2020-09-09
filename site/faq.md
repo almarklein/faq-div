@@ -61,9 +61,13 @@ In short, here are the CSS queries of interest:
 * `.faq > .qa.collapsed`: When the item is collapsed.
 * `.faq > .qa.hidden`: When the item is hidden (e.g. during a search).
 * `.faq > .qa > h3`: The question/title of each item.
-* `.faq .qa > h3 > a.qalink`: The link icon in the title.
+* `.faq > .qa > h3 > .collapse-icon`: The collapse/expand icon.
+* `.faq > .qa > h3 > .link-icon`: The link icon.
 * `.faq > input.search`: The search input element.
 * `.faq > .search-info`: A div where search info is displayed.
+
+For the `collapse-icon` and `link-icon`, the `::before` CSS selector is used
+to set the Unicode char for the icon.
 
 Also see the examples.
 
@@ -82,7 +86,7 @@ This url can be copied and used in links to that specific question.
 You can also use `https://example.com#faq:a-specific-search` to link to the FAQ and directly initiating a search.
 (In case the page has multiple FAQ's, use e.g. prefix `faq1:` to target the right FAQ.)
 
-Linking can be disabled using `<div class='faq' data-link='false'>`
+Linking can be disabled using `<div class='faq' data-link='false'>`.
 
 
 ### Does FAQ-div play well with Markdown?

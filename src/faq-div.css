@@ -8,6 +8,7 @@
     padding: 0.5em 1em;
     margin: 0.5em 0;
     border-top: 1px solid rgba(128, 128, 128, 0.5);
+    overflow-x: visible;
     overflow-y: auto;
 }
 .faq > .qa > .answer {
@@ -25,24 +26,26 @@
 .faq > .qa > h3 {
     cursor: pointer;
     margin: 0;
+    position: relative;
 }
-.faq .qa > h3 > a.qalink {
+
+.faq .qa > h3 > .link-icon, .faq .qa > h3 > .collapse-icon {
+    position: absolute;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
     text-decoration: none;
     font-size: 0.8em;
-    color: rgba(128,128,128,0.0);
-    transition: color 0.5s;
+    transition: color 0.2s;
 }
-.faq > .qa > h3:hover > a.qalink { color: rgba(128,128,128,0.3); }
-.faq > .qa > h3 > a.qalink:hover { color: rgba(128,128,128,0.5); }
-.faq > .qa.highlight > h3 > a.qalink { color: rgba(128,128,128,1.0); }
-
-.faq > .qa.collapsible > h3::before { content: '▴ '; color: rgba(128, 128, 128, 0.5); }
-.faq > .qa.collapsible > h3:hover::before { color: rgba(128, 128, 128, 0.8); }
-.faq > .qa.collapsed > h3::before { content: "▾ "; color: rgba(128, 128, 128, 0.5); }
-.faq > .qa.collapsed > h3:hover::before { color: rgba(128, 128, 128, 0.8); }
+.faq .qa > h3 > a.collapse-icon { right: 1em; color: rgba(128, 128, 128, 0.5); }
+.faq .qa > h3 > a.link-icon { right: -0.5em; color: rgba(128, 128, 128, 0.0); }
+.faq > .qa > h3:hover > .collapse-icon {color: rgba(128, 128, 128, 0.9); }
+.faq > .qa > h3:hover > .link-icon { color: rgba(128, 128, 128, 0.2); }
+.faq > .qa > h3:hover > .link-icon:hover { color: rgba(128, 128, 128, 0.5); }
+.faq > .qa > h3 > .collapse-icon::before { content: '-';}
+.faq > .qa.collapsed > h3 > .collapse-icon::before { content: "+";  }
+.faq > .qa > h3 > .link-icon::before { font-size: 80%; content: '🔗';}
 
 .faq > input.search {
     box-sizing: border-box;

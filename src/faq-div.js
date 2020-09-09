@@ -200,21 +200,23 @@ function faq_this_div(ref_node, faq_id) {
                 answer_node.classList.add('answer');
                 for (let j=2; j<s.length; j++) { answer_node.append(s[j]); }
                 wrapper_node.appendChild(answer_node);
-                // Add link?
-                if (config.link != 'false') {
-                    var link_node = document.createElement('a');
-                    link_node.innerHTML = ' 🔗';  // 🔗¶
-                    link_node.className = 'qalink';
-                    link_node.setAttribute('href', '#' + faq_id + ':' + hash);
-                    link_node.setAttribute('onclick', 'event.stopPropagation();');
-                    index[hash].link_node = link_node;
-                    header_node.appendChild(link_node);
-                }
-                // Collapsable?
+                // Add collapsable icon
                 if (config.collapse != 'false') {
                     wrapper_node.classList.add('collapsible');
                     wrapper_node.classList.add('collapsed');
                     header_node.setAttribute('onclick', 'faqdiv.toggle(this);');
+                    let icon_node = document.createElement('a');
+                    icon_node.className = 'collapse-icon';
+                    header_node.appendChild(icon_node);
+                }
+                // Add link
+                if (config.link != 'false') {
+                    let link_node = document.createElement('a');
+                    link_node.className = 'link-icon';
+                    link_node.setAttribute('href', '#' + faq_id + ':' + hash);
+                    link_node.setAttribute('onclick', 'event.stopPropagation();');
+                    index[hash].link_node = link_node;
+                    header_node.appendChild(link_node);
                 }
                 // Done
                 ref_node.appendChild(wrapper_node);

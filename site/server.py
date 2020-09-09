@@ -77,7 +77,9 @@ def collect_assets():
     faq_html = markdown.markdown(md_highlight(assets["faq.md"]), extensions=[])
     index_html = assets["index.html"]
     index_html = index_html.replace("FAQ_HERE", faq_html)
-    index_html = index_html.replace("EXAMPLE_NAMES", ", ".join(repr(x) for x in sorted(example_names)))
+    index_html = index_html.replace(
+        "EXAMPLE_NAMES", ", ".join(repr(x) for x in sorted(example_names))
+    )
     assets["index.html"] = index_html
 
     return assets
