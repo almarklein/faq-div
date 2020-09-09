@@ -95,15 +95,14 @@ function highlight_element(el, step) {
 
 function toggle(headernode) {
     // Global function to toggle the visibility of a q/a.
-    var node = headernode.parentNode; //e.target.parentNode;
-    node.classList.remove('hidden');
-    if (node.classList.contains('collapsed')) {
-        node.classList.remove('collapsed');
-    } else if (node.classList.contains('collapsible')) {
-        node.classList.add('collapsed');
+    var qa = headernode.parentNode;
+    qa.classList.remove('hidden');
+    if (qa.classList.contains('collapsed')) {
+        qa.classList.remove('collapsed');
+    } else if (qa.classList.contains('collapsible')) {
+        qa.classList.add('collapsed');
     }
 }
-
 
 function faq_this_div(ref_node, faq_id) {
     // Global function to setup a FAQ from a parent faq node

@@ -14,9 +14,12 @@
 .faq > .qa > .answer {
     margin-top: 0.3em;
     overflow: hidden;
+    transition: opacity 0.2s;
+    opacity: 1;
 }
 .faq > .qa.collapsed > .answer {
-    display: none;
+    max-height: 0px;
+    opacity: 0;
 }
 .faq > .qa > h3 {
     cursor: pointer;
