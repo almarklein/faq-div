@@ -120,7 +120,8 @@
         max-width: 600px;
     }
     .features .faq > .qa {
-        border: 1px solid #ddf;
+        border: none;
+        bbborder: 2px solid #ddf;
         border-radius: 4px;
     }
     .features .faq > .qa.collapsible > h3::before { color: #ddf; }
@@ -138,11 +139,10 @@
         <p>A search bar is (optionally) added above the FAQ. It is backed by algorithms that sort results on different criteria, so that
             your users always find what they're looking for.
         </p>
-        <h3>Configurable</h3>
+        <h3>Highly configurable</h3>
         <p>Many features can be configured, e.g. turning off search or collapsing. All added texts can also be configured.
         </p>
-        <h3>Style it</h3>
-        <p>By default, a cumbersome but effective styling is applied, which you can fully tweak to make your FAQ match the rest of your website.</p>
+        <p>By default, a simple effective styling is applied, which you can fully tweak with CSS to make your FAQ match the rest of your website.</p>
         <h3>Links</h3>
         <p>You (and your users) can easily create links to individual questions. You can even create a link for a particular search.</p>
         <h3>Privacy</h3>
@@ -303,8 +303,7 @@ window.addEventListener("load", init_example_links);
     max-width: 800px;
 }
 .faqcontainer .faq > .qa {
-    border: 1px solid #ddf;
-    border-radius: 4px;
+    border-top: 1px solid #ddf;
 }
 .faqcontainer .faq > input.search {
     border-radius: 4px;

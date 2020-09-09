@@ -91,20 +91,13 @@ Absolutely! This is why we have the option enclose your questions and answers wi
 Because you can use plain HTML in Markdown (although not use markdown <i>inside</i> such HTML), this just works:
 
 ```html
-    <pre>
-        <div class='faq-start'></div>
-        ### Question 1
-        ...
-        ### Question 2
-        ...
-        <div class='faq-end'></div>
-    </pre>
+    <div class='faq-start'></div>
+    ### Question 1
+    ...
+    ### Question 2
+    ...
+    <div class='faq-end'></div>
 ```
-
-
-### Do I have to wrap the answers in a paragraph elements?
-
-No, text nodes are supported as well. These are wrapped into `<span>` elements.
 
 
 ### Can I create multiple FAQ's on a single page?
