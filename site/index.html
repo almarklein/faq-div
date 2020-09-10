@@ -14,10 +14,12 @@
         }
         h2 {
             color: #c00;
+            line-height: 100%;
         }
         h2 {
             font-family: "Lucida Console", "Courier new", monospace;
             font-size: 250%;
+            line-height: 100%;
             text-align: center;
         }
         pre.highlight {  /*pygments */
@@ -46,7 +48,8 @@
     align-items: center;
 }
 .hero h1 {
-    font-size: 300%;
+    font-size: 250%;
+    line-height: 100%;
     margin: 1em;
     color: #222;
 }
@@ -56,9 +59,18 @@
 }
 .hero img {
     margin: 1em;
-    width: 256px;
+    width: 128px;
     flex-shrink: 0;
 }
+@media screen and (min-width: 440px) {
+    .hero img {
+       width: 256px;
+    }
+    .hero h1 {
+        font-size: 300%;
+        line-height: 100%;
+    }
+
 </style>
 
 <div class='hero'>
