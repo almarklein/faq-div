@@ -12,6 +12,11 @@
             line-height: 140%;
             color: #222;
         }
+        hr {
+            background: #ccf;
+            border: none;
+            height: 1px;
+        }
         h2 {
             color: #c00;
             line-height: 100%;
@@ -22,17 +27,25 @@
             line-height: 100%;
             text-align: center;
         }
-        pre.highlight {  /*pygments */
+        a, a:link, a:visited, a:active, a:hover {
+            color: #55d;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #77f;
+        }
+        pre {
             font-family: "Lucida Console", "Courier new", monospace;
             font-size: 12px;
             color: #444;
-            background: #fff;
-            border: 1px solid #dddddd;
+            background: #eef;
+            border: 1px solid #ddf;
+            border-radius: 2px;
             padding: 0em 1em;
         }
         code {  /* from `xx`*/
-            background: #eee;
-            padding: 0.2em;
+            background: #eef;
+            padding: 0.2em 0.3em;
         }
     </style>
 </head>
@@ -70,6 +83,7 @@
         font-size: 300%;
         line-height: 100%;
     }
+}
 
 </style>
 
@@ -78,7 +92,10 @@
     <h1>Turn any <tt>div</tt> into a <tt>FAQ</tt></h1>
 </div>
 
+
 <!------------------------------ WHY ----------------------------------------->
+<br /><br />
+<h2>A good FAQ goes a long way</h2>
 
 <style>
 .whycontainer {
@@ -90,11 +107,9 @@
 }
 .why span.big {
     font-size: 250%;
+    color: #88d;
 }
 </style>
-
-<br /><br />
-<h2>A good FAQ goes a long way</h2>
 
 <div class='whycontainer'><div class='why'>
     <p>
@@ -110,6 +125,9 @@
 
 
 <!------------------------------ HOW ----------------------------------------->
+<br /><br />
+<h2>How?</h2>
+
 <style>
 .how {
     display: flex;
@@ -125,9 +143,6 @@
     margin-top: 1em;
 }
 </style>
-
-<br /><br />
-<h2>How?</h2>
 
 <div class='how'>
     <div>
@@ -147,6 +162,9 @@
 
 
 <!------------------------------ FEATURES ----------------------------------------->
+<br /><br />
+<h2>Features</h2>
+
 <style>
     .features {
         display: flex;
@@ -165,14 +183,12 @@
     }
     .features .faq > .qa {
         border: none;
-        bbborder: 2px solid #ddf;
         border-radius: 4px;
     }
-    .features .faq > .qa > h3 > .collapse-icon {  color: #aae; right: unset; left: -1.2em;}
+    .features .faq > .qa > h3 > .collapse-icon { color: #aaf; right: unset; left: -1.2em; }
+    .features .faq > .qa > h3:hover > .collapse-icon { color: #88d; }
 </style>
 
-<br /><br />
-<h2>Features</h2>
 <div class='features'>
     <div class='faq' data-search=false data-link=false>
         <h3>SEO friendly</h3>
@@ -305,11 +321,7 @@ window.addEventListener("load", function() {show_example('dark');});
 }
 
 #example-links a {
-    color: #005;
     cursor: pointer;
-}
-#example-links a:hover {
-    color: #000;
 }
 #a_new_tab {
     color: #fff;
@@ -335,7 +347,98 @@ window.addEventListener("load", function() {show_example('dark');});
     </div>
 </div>
 
+
+
+<!------------------------------ Pricing ----------------------------------------->
+<br /><br />
+<h2>Pricing</h2>
+
+<style>
+.pricing {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.pricing > a {
+    display: block;
+    position: relative;
+    margin: 0 1em;
+    padding: 1em;
+    background: #fff;
+    border-radius: 4px;
+    color: #222;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+.pricing > a:hover {
+    top: -1px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+.pricing h3, .pricing .price, .pricing .action {
+    display: block;
+    text-align: center;
+}
+.pricing h3{ color: #444; }
+.pricing .price { color: #222; }
+.pricing > a .action { color: #77f;}
+.pricing > a:hover .action { color: #55d;}
+</style>
+
+<div class='pricing'>
+
+    <a class='pricing-box' href='#' onclick='auth.signup("/app")'>
+        <h3> Hobby </h3>
+
+        <span class='price'><b>€ 9</b><br></span>
+        <br><hr>
+
+        <br>✓ 1 developer
+        <br>✓ 1 project
+        <br>✓ Free updates for one year
+        <br><br><br>
+
+        <hr>
+        <span class='action'>Buy now</span>
+    </a>
+
+    <a class='pricing-box' href='#' onclick='auth.signup("/account")'>
+        <h3> Pro </h3>
+
+        <span class='price'><b>€ 19</b><br></span>
+        <br><hr>
+
+        <br>✓ Up to 5 developers
+        <br>✓ Unlimited projects
+        <br>✓ Free updates for one year
+        <br><br><br>
+
+        <hr>
+        <span class='action'>Buy now</span>
+    </a>
+
+    <a class='pricing-box' href='/support'>
+        <h3> Business </h3>
+
+        <span class='price'><b>€ 199</b><br></span>
+        <br><hr>
+
+        <br>✓ Unlimited developers
+        <br>✓ Unlimited projects
+        <br>✓ Free updates for one year
+        <br>✓ Priority support
+        <br><br>
+
+        <hr>
+        <span class='action'>Buy now</span>
+    </a>
+
+</div>
+
+
 <!------------------------------ FAQs ----------------------------------------->
+<br /><br />
+<h2>FAQs</h2>
+
 <style>
 .faqcontainer {
     display: flex;
@@ -350,22 +453,23 @@ window.addEventListener("load", function() {show_example('dark');});
 }
 .faqcontainer .faq > input.search {
     border-radius: 4px;
+    color: #224;
+    border-color: #aaf;
 }
-.faqcontainer .faq > .qa.collapsible > h3::before { color: #ddf; }
-.faqcontainer .faq > .qa.collapsible > h3:hover::before { color: #ddf; }
+.faqcontainer .faq > .qa > h3 > .collapse-icon { color: #aaf; }
+.faqcontainer .faq > .qa > h3:hover > .collapse-icon { color: #88d; }
 </style>
-
-<br/><br/>
-<h2>FAQs</h2>
 
 <div class='faqcontainer'>
     <div class='faq'>FAQ_HERE</div>
 </div>
 
-<br /><br /><br />
 
+<!------------------------------ Footer ----------------------------------------->
+<br /><br />
+<hr>
 <center>
-Made with ♥ by <a href='https://almarklein.org'>Almar Klein</a>.
+Made with <span style='color:#c00'>♥</span> by <a href='https://almarklein.org'>Almar Klein</a>.
 </center>
 </body>
 </html>
