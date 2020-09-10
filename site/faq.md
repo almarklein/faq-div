@@ -112,3 +112,11 @@ Yes, you could; FAQ-div is designed to deal with such scenarios.
 ### What if my content is injected after page load?
 
 No worries! You can trigger FAQ-div using `window.faqdiv.init()`.
+
+
+### What browsers are supported by FAQ-div?
+
+FAQ-div is fully functional on all modern browsers (desktop and mobile). It
+may not work on older browsers (like Internet explorer). When it does not work,
+the FAQ is just `<h3>`'s and `<p>`'s, which is a pretty good fallback.
+

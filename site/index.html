@@ -66,6 +66,37 @@
     <h1>Turn any <tt>div</tt> into a <tt>FAQ</tt></h1>
 </div>
 
+<!------------------------------ WHY ----------------------------------------->
+
+<style>
+.whycontainer {
+    display: flex;
+    justify-content: space-evenly;
+}
+.why {
+    max-width: 650px;
+}
+.why span.big {
+    font-size: 250%;
+}
+</style>
+
+<br /><br />
+<h2>A good FAQ goes a long way</h2>
+
+<div class='whycontainer'><div class='why'>
+    <p>
+    <span class='big'>1</span> A FAQ can be effective in <i>responding to the needs</i> of your users,
+    especially if it has good search functionality.
+    </p><p>
+    <span class='big'>2</span> Potential users can <i>learn more</i> in a casual way. Questions that expand when clicked allows browsing without information overload.
+    </p><p>
+    <span class='big'>3</span> <i>Search engines</i> will direct visitors to your website who
+    search for a question similar to your FAQs.
+    </p>
+</div></div>
+
+
 <!------------------------------ HOW ----------------------------------------->
 <style>
 .how {
@@ -101,6 +132,7 @@
         <img src='faq.png'></img>
     </div>
 </div>
+
 
 <!------------------------------ FEATURES ----------------------------------------->
 <style>
@@ -161,7 +193,6 @@
 <script>
 
 async function show_example(name) {
-    console.log(name);
     var url = name + ".html";
     var el_source = document.getElementById('example-source');
     var el_target = document.getElementById('example-target');
@@ -198,6 +229,7 @@ function init_example_links() {
 }
 
 window.addEventListener("load", init_example_links);
+window.addEventListener("load", function() {show_example('dark');});
 </script>
 
 <style>
