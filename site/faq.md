@@ -1,3 +1,6 @@
+
+## Usage
+
 ### How do I add a FAQ to my website?
 
 Start writing your questions in `<h3>` headers, and your answers below.
@@ -89,6 +92,10 @@ You can also use `https://example.com#faq:a-specific-search` to link to the FAQ 
 Linking can be disabled using `<div class='faq' data-link='false'>`.
 
 
+
+## Compatibility
+
+
 ### Does FAQ-div play well with Markdown?
 
 Absolutely! This is why we have the option enclose your questions and answers with faq-start and faq-end divs.
@@ -120,3 +127,40 @@ FAQ-div is fully functional on all modern browsers (desktop and mobile). It
 may not work on older browsers (like Internet explorer). When it does not work,
 the FAQ is just `<h3>`'s and `<p>`'s, which is a pretty good fallback.
 
+
+
+## License and payments
+
+### Can I try FAQ-div before buying it?
+
+Yes, you can download it, and play with it as long as you like.
+
+But as soon as you make it part of any kind of deployment (something
+other people can see), then you will have to purchase the appropriate
+license.
+
+### Is this a one-time payment or a recurring subscription?
+
+The FAQ-div license is obtained as a one-time payment. The license gives you a
+life-long right to use the current version, plus updates for one year.
+
+### Can I use FAQ-div for commercial products?
+
+Yes, but you'll need to purchase a license.
+
+### Do I need to purchase a license for open source projects?
+
+Yes, a license is required for any product that uses FAQ-div and is (potentially) used by more than one person.
+
+### What about support?
+
+When you purchase a license you have a right to email support. The buisiness license gives priority support.
+
+### Do you offer refunds?
+
+No, you can try FAQ-div in advance. Therefore a purchase is final.
+
+### Can I add my company VAT number?
+
+Yes, you can provide your company VAT number during checkout.
+The invoice will be updated accordingly.
