@@ -56,12 +56,13 @@ def md_highlight(text):
 
 def collect_assets():
     # Collect
-    this_dir = os.path.dirname(__file__)
+    this_dir = os.path.abspath(os.path.dirname(__file__))
     assets = {}
     example_names = []
     for subdir in ("", "img", "examples"):
-        for fname in os.listdir(os.path.join(this_dir, subdir)):
-            filename = os.path.join(this_dir, subdir, fname)
+        fulldir = os.path.join(this_dir, subdir) if subdir else this_dir
+        for fname in os.listdir(fulldir):
+            filename = os.path.join(fulldir, fname)
             if not os.path.isfile(filename):
                 continue
             elif fname.endswith((".md", ".html", ".js", ".css")):

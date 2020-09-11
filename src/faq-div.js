@@ -215,7 +215,6 @@ function faq_this_div(ref_node, faq_id) {
                     link_node.className = 'link-icon';
                     link_node.setAttribute('href', '#' + faq_id + ':' + hash);
                     link_node.setAttribute('onclick', 'event.stopPropagation();');
-                    index[hash].link_node = link_node;
                     header_node.appendChild(link_node);
                 }
                 // Done
@@ -245,8 +244,8 @@ function faq_this_div(ref_node, faq_id) {
         if (qa) {
             qa.node.classList.remove('hidden');
             qa.node.classList.remove('collapsed');
+            qa.node.scrollIntoView();
             highlight_element(qa.node);
-            if (qa.link_node) {qa.link_node.focus();}
         } else if (hash) {
             search_node.value = hash.replace(new RegExp('-', 'g'), ' ');
             search();

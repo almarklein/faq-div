@@ -1,27 +1,21 @@
 
 ## Usage
 
-### How do I add a FAQ to my website?
+### How should I write my FAQ?
 
-Start writing your questions in `<h3>` headers, and your answers below.
-The answer can be (a series of) paragraphs, images ... anything.
+The only constraint for the HTML of your FAQ is that the questions are `<h3>` headers.
+If you use an editor, this is probably something like the "heading 3" format. In
+markdown this is `### a heading`.
+
+The answer to the question is usually formatted with paragraphs (`<p>`), but it
+does not have to be. Any other elements, like images can also be used.
 
 
 ### How do I apply FAQ-div?
 
-There's two ways. The first is to put the HTML of your questions and answers in a div that has the class "faq":
-
-```html
-    <div class='faq'>
-        <h3> Question 1 </h3>
-        ...
-        <h3> Question 2 </h3>
-        ...
-    </div>
-```
-
-The other is to the HTML in between two empty divs marked as "faq-start" and "faq-end".
-If the "faq-end" is omitted, all elements (within the parent element) are consumed.
+There are two possible ways to apply FAQ-div. The practical approach
+is to add empty divs marked as "faq-start" and "faq-end", surrounding
+the content of your FAQ:
 
 ```html
     <div class='faq-start'></div>
@@ -30,6 +24,23 @@ If the "faq-end" is omitted, all elements (within the parent element) are consum
     <h3> Question 2 </h3>
     ...
     <div class='faq-end'></div>
+```
+
+This approach is flexible, and e.g. works well with Markdown. The
+"faq-end" can be omitted, in which case all following elements (within
+the parent element) are converted.
+
+The other approach is perhaps more natural (from a developer point of view),
+but it requires a change to the structure of the HTML. Wrap the content
+of your FAQ in a div that has the class "faq":
+
+```html
+    <div class='faq'>
+        <h3> Question 1 </h3>
+        ...
+        <h3> Question 2 </h3>
+        ...
+    </div>
 ```
 
 
@@ -116,10 +127,6 @@ Because you can use plain HTML in Markdown (although not use markdown <i>inside<
 Yes, you could; FAQ-div is designed to deal with such scenarios.
 
 
-### What if my content is injected after page load?
-
-No worries! You can trigger FAQ-div using `window.faqdiv.init()`.
-
 
 ### What browsers are supported by FAQ-div?
 
@@ -127,6 +134,20 @@ FAQ-div is fully functional on all modern browsers (desktop and mobile). It
 may not work on older browsers (like Internet explorer). When it does not work,
 the FAQ is just `<h3>`'s and `<p>`'s, which is a pretty good fallback.
 
+
+### How does it work?
+
+On page load, FAQ-div will select elements with the class "faq" and "faq-start",
+collect the content of your FAQ, and restructure the DOM accordingly.
+
+In this process, it also builds an index for the search functionality.
+The search is performed by smart matching of the query against this
+index. The rest is mostly CSS.
+
+
+### What if my content is created after page load?
+
+No worries! You can trigger FAQ-div using `window.faqdiv.init()`.
 
 
 ## License and payments
