@@ -1,4 +1,6 @@
 site/faq-div.min.js
+site/faq-div.min.css
+site/faq-div.js
 *.pyc
 *.pyo
 .eslintrc.json

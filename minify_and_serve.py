@@ -114,10 +114,10 @@ last_result = ""
 def main():
     global last_result
 
-    css_ori = open("src/faq-div.css", "rb").read().decode()
+    css_ori = open("src/faq-div.src.css", "rb").read().decode()
     css = minify_css(css_ori)
 
-    js_ori = open("src/faq-div.js", "rb").read().decode()
+    js_ori = open("src/faq-div.src.js", "rb").read().decode()
     js = minify_js(js_ori)
 
     total = (
@@ -137,7 +137,7 @@ def main():
         + f"={len(js_ori) + len(css_ori)} chars. Minified: {len(total)}"
     )
 
-    with open("site/faq-div.min.js", "wb") as f:
+    with open("site/faq-div.js", "wb") as f:
         f.write(total.encode())
 
 

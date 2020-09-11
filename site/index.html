@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>FAQ-div</title>
-    <script src='faq-div.min.js'></script>
+    <script src='faq-div.js'></script>
     <style>
         body {
             background: #fff;
@@ -51,6 +51,26 @@
 </head>
 <body>
 
+
+<!------------------------------ HEADER ----------------------------------------->
+
+<style>
+.headermenu {
+    display: flex;
+    justify-content: flex-end;
+}
+.headermenu > a {
+    margin: 1em;
+    font-size: 120%;
+}
+</style>
+
+<div class='headermenu'>
+    <a href='faq-div.js' download>Download</a>
+    <a href='#pricing'>Pricing</a>
+    <a href='#docs'>Docs</a>
+    <span style='width:10vw'></span>
+</div>
 
 
 <!------------------------------ HERO ----------------------------------------->
@@ -185,7 +205,7 @@
         border: none;
         border-radius: 4px;
     }
-    .features .faq > .qa > h3 > .collapse-icon { color: #aaf; right: unset; left: -1.1em; }
+    .features .faq > .qa > h3 > .collapse-icon { color: #aaf; right: unset; left: -0.9em; }
     .features .faq > .qa > h3:hover > .collapse-icon { color: #88d; }
 </style>
 
@@ -351,6 +371,7 @@ window.addEventListener("load", function() {show_example('dark');});
 
 <!------------------------------ Pricing ----------------------------------------->
 <br /><br />
+<a name='pricing'></a>
 <h2>Pricing</h2>
 
 <style>
@@ -433,9 +454,14 @@ window.addEventListener("load", function() {show_example('dark');});
 
 </div>
 
+<br /><br />
+<center>
+See the <a href='license.html'>License agreement</a> for details.
+</center>
 
 <!------------------------------ FAQs ----------------------------------------->
 <br /><br />
+<a name='docs'></a>
 <h2>FAQs</h2>
 
 <style>

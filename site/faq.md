@@ -11,6 +11,26 @@ The answer to the question is usually formatted with paragraphs (`<p>`), but it
 does not have to be. Any other elements, like images can also be used.
 
 
+### How do I load the FAQ-div library on my page?
+
+Download the FAQ-div lib and makes sure your server can serve it, then add
+this anywhere on your page (preferably in the head section):
+
+```html
+<script src='faq-div.js'></script>
+```
+
+Alternatively, you can copy the source code and include the source directly:
+
+```html
+<script>
+...
+</script>
+```
+
+todo: CDN
+
+
 ### How do I apply FAQ-div?
 
 There are two possible ways to apply FAQ-div. The practical approach
@@ -148,6 +168,7 @@ index. The rest is mostly CSS.
 ### What if my content is created after page load?
 
 No worries! You can trigger FAQ-div using `window.faqdiv.init()`.
+It's safe to call it multiple times.
 
 
 ## License and payments
@@ -175,7 +196,8 @@ Yes, a license is required for any product that uses FAQ-div and is (potentially
 
 ### What about support?
 
-When you purchase a license you have a right to email support. The buisiness license gives priority support.
+When you purchase a license you have a right to email support. The business license gives priority support.
+For support requests, contact me at `almar AT almarklein.org`.
 
 ### Do you offer refunds?
 
@@ -185,3 +207,12 @@ No, you can try FAQ-div in advance. Therefore a purchase is final.
 
 Yes, you can provide your company VAT number during checkout.
 The invoice will be updated accordingly.
+
+
+### Can I pay via wire transfer?
+
+We make use of Gumroad to handle payments and invoicing. Gumroad supports
+creditcard and Paypal.
+If this is not an option for you or your company,
+contact me at `almar AT almarklein.org`. so we can arrange for a wire transfer. You
+will still can get invoice this way.

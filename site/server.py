@@ -11,6 +11,34 @@ from pygments.lexers import get_lexer_by_name
 
 stats_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
+LICENSE_PRE = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>FAQ-div license</title>
+</head>
+<body>
+<style>
+h2 {
+    color: #c00;
+}
+.content {
+    max-width: 800px;
+    margin: 1em auto 1em auto;
+}
+</style>
+<div class='content'>
+<a href='/'>&lt;&lt; FAQ-div home</a>
+"""
+
+LICENSE_POST = """
+</div>
+</body>
+</html>
+"""
+
+
 
 def send_stats(request, status_code=None, rtime=None, is_page=None):
     """ Send request stats over UPD to a stats server. """
@@ -82,6 +110,10 @@ def collect_assets():
         "EXAMPLE_NAMES", ", ".join(repr(x) for x in sorted(example_names))
     )
     assets["index.html"] = index_html
+    #
+    license_html = markdown.markdown(md_highlight(assets["license.md"]), extensions=[])
+    license_html = LICENSE_PRE + license_html + LICENSE_POST
+    assets["license.html"] = license_html
 
     return assets
 
