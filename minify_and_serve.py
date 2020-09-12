@@ -9,7 +9,7 @@ from jsmin import jsmin
 
 
 preamble = """
-/* Copyright 2019-2020 Almar Klein. You need a license to use FAQ-div. */
+/* Copyright 2019-2020 Almar Klein. You need a license to use FAQ-div. Do not remove this comment. */
 """.lstrip()
 
 

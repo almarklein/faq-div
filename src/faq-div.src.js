@@ -5,7 +5,7 @@
 // Alternatively, we hoist elements in between two divs which have classes "faq-start" and "faq-end", respectively.
 // The faq-start element functions as normal faq element from there.
 
-var version = '1.1';
+var version = '1.2';
 var css = ""; // deliberate double qoutes here
 
 // dict of faqs objects
