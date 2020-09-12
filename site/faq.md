@@ -8,7 +8,7 @@ If you use an editor, this is probably something like the "heading 3" format. In
 markdown this is `### a heading`.
 
 The answer to the question is usually formatted with paragraphs (`<p>`), but it
-does not have to be. Any other elements, like images can also be used.
+does not have to be. Any other elements (e.g. images) can also be used.
 
 
 ### How do I load the FAQ-div library on my page?
@@ -28,7 +28,7 @@ Alternatively, you can copy the source code and include the source directly:
 </script>
 ```
 
-todo: CDN
+At the moment, FAQ-div is not yet available via a CDN.
 
 
 ### How do I apply FAQ-div?
@@ -74,9 +74,9 @@ Configurarion is done using the `data` attributes, e.g.:
 These are the configuration opions:
 
 * `data-collapse`: set to "false" to show q&a items uncollapsed. Default is "true".
-* `data-link`: set to "false" to not show the link icon when hovering over the question.
+* `data-link`: set to "false" to not show the link icon when hovering over the question. Default is "true".
 * `data-search`: set to "false" to hide the search element. Default is "true".
-* `data-search-placeholder`: custimize the placeholder text in the search input box.
+* `data-search-placeholder`: customize the placeholder text in the search input box.
 * `data-search-info`: this string is displayed when the user does a search.
   The text "COUNT" is replaced with the search count, and the text "SEARCH" is replaced with
   the current text in the search box. You can use this to customize for other languages,
@@ -94,7 +94,7 @@ In short, here are the CSS queries of interest:
 * `.faq > .qa.collapsible`: When the items can be collapsed.
 * `.faq > .qa.collapsed`: When the item is collapsed.
 * `.faq > .qa.hidden`: When the item is hidden (e.g. during a search).
-* `.faq > .qa > h3`: The question/title of each item.
+* `.faq > .qa > h3`: The question/title of an item.
 * `.faq > .qa > h3 > .collapse-icon`: The collapse/expand icon.
 * `.faq > .qa > h3 > .link-icon`: The link icon.
 * `.faq > input.search`: The search input element.
@@ -214,5 +214,5 @@ The invoice will be updated accordingly.
 We make use of Gumroad to handle payments and invoicing. Gumroad supports
 creditcard and Paypal.
 If this is not an option for you or your company,
-contact me at `almar AT almarklein.org`. so we can arrange for a wire transfer. You
-will still can get invoice this way.
+contact me at `almar AT almarklein.org`, so we can arrange for a wire transfer (you
+will still get invoice).
