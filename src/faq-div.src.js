@@ -116,6 +116,7 @@ function faq_this_div(ref_node, faq_id) {
     // Prepare
     var sections = [[null]];
     var index = {};
+    var in_betweens = [];  // divs that contain a sections (and following content)
 
     // Create nodes for search
     var search_node = document.createElement('input');
@@ -225,6 +226,7 @@ function faq_this_div(ref_node, faq_id) {
                 let in_between = document.createElement('div');
                 for (let j=1; j<s.length; j++) { in_between.append(s[j]); }
                 ref_node.appendChild(in_between);
+                in_betweens.push(in_between)
             }
         }
     }
@@ -285,12 +287,8 @@ function faq_this_div(ref_node, faq_id) {
                 }
             }
             // Show in-between nodes too
-            for (let s of sections) {
-                if (s[0] === null) {
-                    for (let j=1; j<s.length; j++) {
-                        s[j].classList.remove('hidden');
-                    }
-                }
+            for (let node of in_betweens) {
+                node.classList.remove('hidden');
             }
         } else {
             // Hide nodes
@@ -300,12 +298,8 @@ function faq_this_div(ref_node, faq_id) {
                 qa.node.classList.remove('collapsed');
             }
             // Hide in-between nodes
-            for (let s of sections) {
-                if (s[0] === null) {
-                    for (let j=1; j<s.length; j++) {
-                        s[j].classList.add('hidden');
-                    }
-                }
+            for (let node of in_betweens) {
+                node.classList.add('hidden');
             }
             // Rate each question
             var questions = [];
