@@ -28,11 +28,11 @@
             text-align: center;
         }
         a, a:link, a:visited, a:active, a:hover {
-            color: #55d;
+            color: #555;
             text-decoration: none;
         }
         a:hover {
-            color: #77f;
+            color: #000;
         }
         pre {
             font-family: "Lucida Console", "Courier new", monospace;
@@ -62,6 +62,7 @@
 .headermenu > a {
     margin: 1em;
     font-size: 120%;
+    font-weight: bold;
 }
 </style>
 
@@ -121,13 +122,14 @@
 .whycontainer {
     display: flex;
     justify-content: space-evenly;
+    font-size: 110%;
 }
 .why {
     max-width: 650px;
 }
 .why span.big {
     font-size: 250%;
-    color: #88d;
+    color: #444;
 }
 </style>
 
@@ -153,6 +155,7 @@
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    font-size: 110%;
 }
 .how > div {
     text-align: center;
@@ -174,7 +177,7 @@
         <img src='2lines2.png'></img>
     </div>
     <div>
-        Bam! A beautiful FAQ with powerful search, and more!<br>
+        Bam! A beautiful FAQ with awesome features!<br>
         <img src='faq.png'></img>
     </div>
 </div>
@@ -398,10 +401,10 @@ window.addEventListener("load", function() {show_example('dark');});
     display: block;
     text-align: center;
 }
-.pricing h3{ color: #444; }
-.pricing .price { color: #222; }
-.pricing > a .action { color: #77f;}
-.pricing > a:hover .action { color: #55d;}
+.pricing h3 { color: #000; }
+.pricing .price { color: #555; }
+.pricing > a .action { color: #000;}
+.pricing > a:hover .action { color: #000;}
 </style>
 
 <div class='pricing'>
@@ -455,7 +458,7 @@ window.addEventListener("load", function() {show_example('dark');});
 
 <br /><br />
 <center>
-See the <a href='license.html'>License agreement</a> for details.
+See the <a href='license.html'>License Agreement</a> for details.
 </center>
 
 <!------------------------------ FAQs ----------------------------------------->
