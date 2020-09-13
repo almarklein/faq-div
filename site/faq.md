@@ -7,14 +7,14 @@ The only constraint for the HTML of your FAQ is that the questions are `<h3>` he
 If you use an editor, this is probably something like the "heading 3" format. In
 markdown this is `### a heading`.
 
-The answer to the question is usually formatted with paragraphs (`<p>`), but it
-does not have to be. Any other elements (e.g. images) can also be used.
+The answers to the questions are usually formatted with paragraphs
+(`<p>`), but any other elements (e.g. images) can also be used.
 
 
 ### How do I load the FAQ-div library on my page?
 
-Download the FAQ-div lib and makes sure your server can serve it, then add
-this anywhere on your page (preferably in the head section):
+Download the FAQ-div lib and add it to your website's assets, then add
+the following HTML anywhere on your page (preferably in the head section):
 
 ```html
 <script src='faq-div.js'></script>
@@ -215,4 +215,4 @@ We make use of Gumroad to handle payments and invoicing. Gumroad supports
 creditcard and Paypal.
 If this is not an option for you or your company,
 contact me at `almar AT almarklein.org`, so we can arrange for a wire transfer (you
-will still get invoice).
+will still get an invoice).
