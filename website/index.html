@@ -115,6 +115,48 @@
 </div>
 
 
+<!------------------------------ HOW ----------------------------------------->
+<br /><br />
+<h2>How?</h2>
+
+<style>
+.how {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    font-size: 110%;
+}
+.how > div {
+    text-align: center;
+    width: 256px;
+}
+.how > div.spacer {
+    width: 0px;
+}
+.how > div > img {
+    width: 256px;
+    margin-top: 1em;
+}
+</style>
+
+<div class='how'>
+    <div class='spacer'></div>
+    <div>
+        Write your code as you would with any Q&A.<br>
+        <img src='div2.png'></img>
+    </div>
+    <div>
+        Add two lines.<br>
+        <img src='2lines2.png'></img>
+    </div>
+    <div>
+        Bam! A beautiful FAQ with awesome features!<br>
+        <img src='faq.png'></img>
+    </div>
+    <div class='spacer'></div>
+</div>
+
+
 <!------------------------------ WHY ----------------------------------------->
 <br /><br />
 <h2>A good FAQ goes a long way</h2>
@@ -145,43 +187,6 @@
     search for a question similar to your FAQs.
     </p>
 </div></div>
-
-
-<!------------------------------ HOW ----------------------------------------->
-<br /><br />
-<h2>How?</h2>
-
-<style>
-.how {
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    font-size: 110%;
-}
-.how > div {
-    text-align: center;
-    width: 256px;
-}
-.how > div > img {
-    width: 256px;
-    margin-top: 1em;
-}
-</style>
-
-<div class='how'>
-    <div>
-        Write your code as you would with any Q&A.<br>
-        <img src='div2.png'></img>
-    </div>
-    <div>
-        Add two lines.<br>
-        <img src='2lines2.png'></img>
-    </div>
-    <div>
-        Bam! A beautiful FAQ with awesome features!<br>
-        <img src='faq.png'></img>
-    </div>
-</div>
 
 
 <!------------------------------ FEATURES ----------------------------------------->
@@ -269,18 +274,18 @@ function init_example_links() {
     var el_links = document.getElementById('example-links');
     el_links.innerHTML = "";
     for (let name of links) {
-        let url = name + '.html';
-        let el = document.createElement("li");
-        let a1 = document.createElement("a");
-        a1.innerText = name;
-        a1.setAttribute("onclick", "window.show_example('" + name + "');");
-        el.appendChild(a1);
+        let el = document.createElement("option");
+        el.setAttribute("value", name)
+        el.innerText = name;
         el_links.appendChild(el);
     }
+    el_links.onchange = function (ev) {show_example(ev.target.value); };
+    // Init
+    el_links.value = "dark";
+    show_example("dark");
 }
 
 window.addEventListener("load", init_example_links);
-window.addEventListener("load", function() {show_example('dark');});
 </script>
 
 <style>
@@ -289,31 +294,20 @@ window.addEventListener("load", function() {show_example('dark');});
     display: flex;
     flex-wrap: wrap;
 }
-
-.link-container {
-    flex-grow: 0;
-    margin: 0.5em;
-    margin: 5px;
-    padding-right: 2em;
-    font-size: 120%;
+.examples > div {
+    flex-grow: 1;
 }
-
-.source-container, .target-container {
+.examples > .source-container, .examples > .target-container {
     box-sizing: border-box;
     min-width: 300px;
-    flex-grow: 2;
+    max-width: 700px;
+    flex-grow: 5;
     flex-basis: 0;
     margin: 5px;
 }
 #example-source, #example-target {
     height: 60vh;
 }
-@media screen and (min-width: 440px) {
-    .source-container, .target-container {
-        min-width: 400px;
-    }
-}
-
 .source-container > span, .target-container > span {
     display: block;
     background: #222;
@@ -323,7 +317,6 @@ window.addEventListener("load", function() {show_example('dark');});
     border-radius: 4px 4px 0 0;
     padding: 0.3em 1em;
 }
-
 #example-source, #example-target {
     box-sizing: border-box;
     margin: 0;
@@ -331,7 +324,6 @@ window.addEventListener("load", function() {show_example('dark');});
     border: 3px solid #222;
     border-radius: 0 0 4px 4px;
 }
-
 #example-source {
     font-family: "Lucida Console", "Courier new", monospace;
     font-size: 70%;
@@ -342,34 +334,32 @@ window.addEventListener("load", function() {show_example('dark');});
     overflow-y: auto;
     color: #444;
 }
-
+#example-links {
+    border-radius: 4px;
+    padding: 0.2em 0.3em;
+    border: 1px solid #888;
+}
 #example-links a {
     cursor: pointer;
 }
 #a_new_tab {
     color: #fff;
+    text-decoration: underline;
 }
-
 </style>
 
 <div class='examples'>
-    <div class='link-container'>
-        <ul id='example-links'>
-            <li><a onclick="show_example('styling1');">styling1</a></li>
-            <li><a onclick="show_example('styling2');">styling2</a></li>
-            <li>dark</li>
-        </ul>
-    </div>
+    <div></div>
     <div class='source-container'>
-        <span>Source</span>
+        <span>Select source <select id='example-links'></select></span>
         <div id='example-source'></div>
     </div>
     <div class='target-container'>
         <span>View result (or open in <a id='a_new_tab' href='#' target='new'>new tab</a>)</span>
         <iframe id='example-target'></iframe>
     </div>
+    <div></div>
 </div>
-
 
 
 <!------------------------------ Pricing ----------------------------------------->
