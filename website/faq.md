@@ -171,6 +171,24 @@ No worries! You can trigger FAQ-div using `window.faqdiv.init()`.
 It's safe to call it multiple times.
 
 
+### How do I add FAQ-div to my WordPress site?
+
+Add the file `faq-div.js` to your website. Then add the below code
+to your `functions.php`:
+
+```php
+add_action( 'wp_enqueue_scripts', 'addFaqDivScript');
+function addFaqDivScript() {
+    if ( is_page('your-page-title-or-id') ) {
+        wp_enqueue_script('faq-div.js', '/path/to/faq-div.js');
+    }
+}
+```
+
+The `/path/to/faq-div.js` must be the script's path relative to the
+WordPress root directory, or it can be the full URL.
+
+
 ## License and payments
 
 ### Can I try FAQ-div before buying it?
