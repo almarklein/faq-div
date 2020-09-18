@@ -137,14 +137,14 @@ def main():
         + f"={len(js_ori) + len(css_ori)} chars. Minified: {len(total)}"
     )
 
-    with open("site/faq-div.js", "wb") as f:
+    with open("website/faq-div.js", "wb") as f:
         f.write(total.encode())
 
 
 if __name__ == "__main__":
     main()
 
-    os.chdir("site")
+    os.chdir("website")
     sys.path.insert(0, "")
     import server
 
