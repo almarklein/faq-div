@@ -7,4 +7,4 @@ for size in sizes:
     fname = f"faqdivlogo{size}.png"
     icon.read(fname)
 
-icon.write(f"favicon.ico")
+icon.write("favicon.ico")

@@ -59,7 +59,7 @@ FAQ-div is implemented in vanilla JS. The tooling is mostly in Python
 * `python build.py`: generate `dist/faq-div.min.js`.
 * `python build.py develop`: generate `dist/faq-div.min.js` continuously.
 * `python serve.py`: build, then start a webserver for website and examples.
-* `black .`: autoformat all Python code.
-* `flake8 .`: linting of Python code.
+* `black .`: autoformat the Python code.
+* `flake8 . --max-line-length=89`: linting the Python code.
 * I use VS Code plugins to lint the JavaScript and CSS.
 

@@ -5,7 +5,6 @@ to continuously build the sources.
 You may need to ``pip install jsmin``.
 """
 
-import os
 import sys
 import time
 
@@ -38,7 +37,9 @@ def wordgen():
 def remove_comments_and_trailing_ws(text):
     lines = text.splitlines()
     lines = [line.split("//")[0].strip() for line in lines]
-    lines = [line for line in lines if not (line.startswith("/*") and line.endswith("*/"))]
+    lines = [
+        line for line in lines if not (line.startswith("/*") and line.endswith("*/"))
+    ]
     lines = [line for line in lines if line]
     return "\n".join(lines)
 
