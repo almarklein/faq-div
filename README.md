@@ -1,6 +1,7 @@
-# FAQ-div - turn any `<div>` into FAQ
-
 ![preview](website/img/faqdiv-wide.png)
+
+# FAQ-div - turn any div into a FAQ
+
 
 FAQ-div is a small JS library that makes it very easy to create effective FAQ pages.
 
@@ -24,6 +25,8 @@ etc.
 Add two lines of code :
 ```html
 <script src='faq-div.min.js'></script>
+
+...
 
 <div class='faq-start'></div>
 
