@@ -274,7 +274,7 @@ async function show_example(name) {
     }
 }
 
-var links = [EXAMPLE_NAMES];
+var links = [{{ example_names }}];
 
 function init_example_links() {
     var el_links = document.getElementById('example-links');
@@ -455,7 +455,7 @@ window.addEventListener("load", init_example_links);
 
 <br /><br />
 <center>
-See the <a href='license.html'>License Agreement</a> for details.
+See the <a href='license_commercial.html'>License Agreement</a> for details.
 </center>
 
 <!------------------------------ FAQs ----------------------------------------->
@@ -489,7 +489,9 @@ See the <a href='license.html'>License Agreement</a> for details.
 </style>
 
 <div class='faqcontainer'>
-    <div class='faq' data-search-placeholder='Search docs ...'>FAQ_HERE</div>
+    <div class='faq' data-search-placeholder='Search docs ...'>
+    {{ faq }}
+    </div>
 </div>
 
 

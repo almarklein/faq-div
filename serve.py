@@ -1,7 +1,7 @@
 """
 Python script to serve the FAQ-div website and examples.
 
-You may need to ``pp install uvicorn, asgineer, markdown pygments``.
+You may need to ``pp install uvicorn, asgineer, markdown jinja2 pygments``.
 """
 
 import os
@@ -12,71 +12,13 @@ import build
 
 import asgineer
 import markdown
+import jinja2
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 
 
 # %% Collect and generate assets
-
-
-HTML_TEMPLATE = """
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>TITLE</title>
-</head>
-<body>
-<style>
-body {
-    background: #fff;
-    font-family: "Lucida Sans Unicode", Verdana, sans-serif;
-    font-size: 108%;
-    line-height: 140%;
-    color: #222;
-}
-h1 {
-    text-align: center;
-    margin: 1.5em 0;
-}
-h2 {
-    color: #c00;
-    font-family: "Lucida Console", "Courier new", monospace;
-    text-align: center;
-    margin: 1.2em 0;
-}
-hr {
-    background: #ccf;
-    border: none;
-    height: 1px;
-    margin: 2em 0;
-}
-a, a:link, a:visited, a:active, a:hover {
-    color: #555;
-    text-decoration: underline;
-}
-a:hover {
-    color: #000;
-}
-.content {
-    max-width: 800px;
-    margin: 1em auto 1em auto;
-}
-</style>
-<div class='content'>
-<center>
-<a href='/'><img src='/faqdiv-wide.png' width='75%'></img></a>
-</center>
-<br />
-
-HTML
-
-<br /><br /><br /><br />
-</div>
-</body>
-</html>
-""".lstrip()
 
 
 def md_highlight(text):
@@ -113,7 +55,7 @@ def collect_assets():
     # Collect
     this_dir = os.path.abspath(os.path.dirname(__file__))
     assets = {}
-    example_names = []
+    examples = []
     for subdir in ("", "src", "dist", "website", "examples", "website/img"):
         fulldir = os.path.join(this_dir, subdir) if subdir else this_dir
         for fname in os.listdir(fulldir):
@@ -124,33 +66,38 @@ def collect_assets():
                 with open(filename, "rb") as f:
                     assets[fname] = f.read().decode()
                 if subdir == "examples" and fname.endswith(".html"):
-                    example_names.append(fname[:-5])
-            elif fname.endswith((".png", ".jpg")):
+                    examples.append(fname[:-5])
+            elif fname.endswith((".png", ".jpg", ".ico")):
                 with open(filename, "rb") as f:
                     assets[fname] = f.read()
 
     # Collect blog pages
+    template = jinja2.Template(assets["template.html"])
     blogpages = {}
     for fname in os.listdir(os.path.join(this_dir, "website", "blog")):
         if fname.endswith(".md"):
             fname2 = "blog/" + fname[:-3] + ".html"
             with open(os.path.join(this_dir, "website", "blog", fname), "rb") as f:
                 text = f.read().decode()
-            html = md2html(text)
-            html = HTML_TEMPLATE.replace("HTML", html).replace("wide.png", "blog.png")
-            html = html.replace("TITLE", "FAQ-div blog")
-            assets[fname2] = html
             title = text.splitlines()[0].strip("#").strip()
             date = text.split("-- DATE:")[1].split("--")[0].strip()
             assert len(date) == 10
             blogpages[date] = fname2, title
+            assets[fname2] = template.render(
+                title="FAQ-div blog: " + title,
+                header_image="faqdiv-blog.png",
+                content=md2html(text),
+            )
     html = "<h2>Pages</h2>\n\n"
     for date in sorted(blogpages.keys(), reverse=False):
         fname, title = blogpages[date]
         html += f"<a href='/{fname}'>{title}</a><br />\n"
-    html = HTML_TEMPLATE.replace("HTML", html).replace("wide.png", "blog.png")
-    html = html.replace("TITLE", "FAQ-div blog")
-    assets["blog"] = assets["blog/"] = html
+    assets["blog"] = template.render(
+        title="FAQ-div blog",
+        header_image="faqdiv-blog.png",
+        content=html,
+    )
+    assets["blog/"] = assets["blog"]  # aliases
 
     # Generate sitemap
     sitemap = ["", "blog"] + [fname for fname, title in blogpages.values()]
@@ -167,19 +114,17 @@ def collect_assets():
     assets["robots.txt"] = "\n".join(robots)
 
     # Post processing
-    faq_html = md2html(assets["faq.md"])
-    index_html = assets["index.html"]
-    index_html = index_html.replace("FAQ_HERE", faq_html)
-    index_html = index_html.replace(
-        "EXAMPLE_NAMES", ", ".join(repr(x) for x in sorted(example_names))
+    index_template = jinja2.Template(assets["index.html"])
+    assets["index.html"] = index_template.render(
+        example_names=", ".join(repr(x) for x in sorted(examples)),
+        faq=md2html(assets["faq.md"]),
     )
-    assets["index.html"] = index_html
     #
-    license_html = md2html(assets["license_commercial.md"])
-    license_html = HTML_TEMPLATE.replace("HTML", license_html)
-    license_html = license_html.replace("TITLE", "FAQ-div license")
-    assets["license.html"] = license_html
-
+    assets["license_commercial.html"] = template.render(
+        title="FAQ-div license",
+        header_image="faqdiv-wide.png",
+        content=md2html(assets["license_commercial.md"]),
+    )
     return assets
 
 
