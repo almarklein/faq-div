@@ -1,9 +1,13 @@
 """
-Python script to minify the code and put it into a single .js file.
+Python script to minify the code. Call with ``python build.py develop``
+to continuously build the sources.
+
+You may need to ``pip install jsmin``.
 """
 
 import os
 import sys
+import time
 
 from jsmin import jsmin
 
@@ -94,7 +98,6 @@ def minify_js(text):
     text = remove_comments_and_trailing_ws(text)
     text = rename_variabes_js(text)
     text = jsmin(text)
-    # text = text.replace("\n", " ")
     return text
 
 
@@ -120,36 +123,33 @@ def main():
     js_ori = open("src/faq-div.js", "rb").read().decode()
     js = minify_js(js_ori)
 
-    total = (
+    minified = (
         preamble
         + "(function() {\n"
         + js.replace('css="";', f'css="{css}";\n')
         + "\n})();"
     )
 
-    if total == last_result:
+    if minified == last_result:
         return
 
-    last_result = total
+    last_result = minified
 
     print(
         f"Minimizing: original css and js are {len(css_ori)}+{len(js_ori)}"
-        + f"={len(js_ori) + len(css_ori)} chars. Minified: {len(total)}"
+        + f"={len(js_ori) + len(css_ori)} chars. Minified: {len(minified)}"
     )
 
-    with open("website/faq-div.min.js", "wb") as f:
-        f.write(total.encode())
+    with open("dist/faq-div.min.js", "wb") as f:
+        f.write(minified.encode())
 
 
 if __name__ == "__main__":
-    main()
-
-    os.chdir("website")
-    sys.path.insert(0, "")
-    import server
-
-    server.serve()
-    # # dev-more
-    # while True:
-    #     time.sleep(1)
-    #     main()
+    if "help" in sys.argv or "-h" in sys.argv or "--help" in sys.argv:
+        print(__doc__)
+    elif "develop" in sys.argv:
+        while True:
+            main()
+            time.sleep(1)
+    else:
+        main()

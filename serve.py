@@ -1,6 +1,14 @@
+"""
+Python script to serve the FAQ-div website and examples.
+
+You may need to ``pp install uvicorn, asgineer, markdown pygments``.
+"""
+
 import os
 import json
 import socket
+
+import build
 
 import asgineer
 import markdown
@@ -9,7 +17,7 @@ from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 
 
-# %% Loading and generating assets
+# %% Collect and generate assets
 
 
 HTML_TEMPLATE = """
@@ -106,7 +114,7 @@ def collect_assets():
     this_dir = os.path.abspath(os.path.dirname(__file__))
     assets = {}
     example_names = []
-    for subdir in ("", "examples", "img"):
+    for subdir in ("", "src", "dist", "website", "examples", "website/img"):
         fulldir = os.path.join(this_dir, subdir) if subdir else this_dir
         for fname in os.listdir(fulldir):
             filename = os.path.join(fulldir, fname)
@@ -123,10 +131,10 @@ def collect_assets():
 
     # Collect blog pages
     blogpages = {}
-    for fname in os.listdir(os.path.join(this_dir, "blog")):
+    for fname in os.listdir(os.path.join(this_dir, "website", "blog")):
         if fname.endswith(".md"):
             fname2 = "blog/" + fname[:-3] + ".html"
-            with open(os.path.join(this_dir, "blog", fname), "rb") as f:
+            with open(os.path.join(this_dir, "website", "blog", fname), "rb") as f:
                 text = f.read().decode()
             html = md2html(text)
             html = HTML_TEMPLATE.replace("HTML", html).replace("wide.png", "blog.png")
@@ -167,7 +175,7 @@ def collect_assets():
     )
     assets["index.html"] = index_html
     #
-    license_html = md2html(assets["license.md"])
+    license_html = md2html(assets["license_commercial.md"])
     license_html = HTML_TEMPLATE.replace("HTML", license_html)
     license_html = license_html.replace("TITLE", "FAQ-div license")
     assets["license.html"] = license_html
@@ -175,10 +183,12 @@ def collect_assets():
     return assets
 
 
+build.main()
 asset_handler = asgineer.utils.make_asset_handler(collect_assets())
 
 
 # %% Serving
+
 
 stats_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
@@ -216,9 +226,9 @@ async def main_handler(request):
     return response
 
 
-def serve():
+def main():
     asgineer.run(main_handler, "uvicorn", "0.0.0.0:80", log_level="warning")
 
 
 if __name__ == "__main__":
-    serve()
+    main()
