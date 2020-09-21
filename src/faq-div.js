@@ -1,9 +1,12 @@
+// faq-div.js - Copyright 2019-2020 Almar Klein
+// https://github.com/almarklein/faq-div
+//
+// @license GPLv3 for open source use only
+// or FAQ-div Commercial License for commercial use
+// http://faq-div.com
+
 // When minified, this whole code gets wrapped into a function to avoid variable leakage.
 // Also, the CSS variable gets inserted.
-
-// We look for divs that have a classname "faq", and turn their child h3-p pairs into qa items.
-// Alternatively, we hoist elements in between two divs which have classes "faq-start" and "faq-end", respectively.
-// The faq-start element functions as normal faq element from there.
 
 var version = '1.2';
 var css = ""; // deliberate double qoutes here

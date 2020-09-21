@@ -13,7 +13,15 @@ from jsmin import jsmin
 
 
 preamble = """
-/* Copyright 2019-2020 Almar Klein. You need a license to use FAQ-div. Do not remove this comment. */
+/*
+ * faq-div.min.js - Copyright 2019-2020 Almar Klein
+ * https://github.com/almarklein/faq-div
+ *
+ * @license GPLv3 for open source use only
+ * or FAQ-div Commercial License for commercial use
+ * http://faq-div.com
+ * Do not remove this comment.
+ */
 """.lstrip()
 
 
@@ -30,6 +38,7 @@ def wordgen():
 def remove_comments_and_trailing_ws(text):
     lines = text.splitlines()
     lines = [line.split("//")[0].strip() for line in lines]
+    lines = [line for line in lines if not (line.startswith("/*") and line.endswith("*/"))]
     lines = [line for line in lines if line]
     return "\n".join(lines)
 
