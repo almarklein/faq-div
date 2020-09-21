@@ -43,4 +43,4 @@ jobs:
       - name: Lint JS
         if: matrix.lint == 1
         run: |
-            eslint src
+            npx eslint src
