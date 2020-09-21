@@ -1,6 +1,7 @@
 
 ## Usage
 
+
 ### How should I write my FAQ?
 
 The only constraint for the HTML of your FAQ is that the questions are `<h3>` headers.
@@ -123,7 +124,6 @@ You can also use `https://example.com#faq:a-specific-search` to link to the FAQ 
 Linking can be disabled using `<div class='faq' data-link='false'>`.
 
 
-
 ## Compatibility
 
 
@@ -145,7 +145,6 @@ Because you can use plain HTML in Markdown (although not use markdown <i>inside<
 ### Can I create multiple FAQ's on a single page?
 
 Yes, you could; FAQ-div is designed to deal with such scenarios.
-
 
 
 ### What browsers are supported by FAQ-div?
@@ -191,35 +190,41 @@ WordPress root directory, or it can be the full URL.
 
 ## License and payments
 
+
 ### Can I try FAQ-div before buying it?
 
-Yes, you can download it, and play with it as long as you like.
+Yes, you can download it, and play with it as long as you like, as long
+as any deployments are compliant with the GPLv3 license.
 
-But as soon as you make it part of any kind of deployment (something
-other people can see), then you will have to purchase the appropriate
-license.
 
 ### Is this a one-time payment or a recurring subscription?
 
 The FAQ-div license is obtained as a one-time payment. The license gives you a
 life-long right to use the current version, plus updates for one year.
 
+
 ### Can I use FAQ-div for commercial products?
 
 Yes, but you'll need to purchase a license.
 
+
 ### Do I need to purchase a license for open source projects?
 
-Yes, a license is required for any product that uses FAQ-div and is (potentially) used by more than one person.
+This depends on the license of the website/product that you use FAQ-div in.
+If this is (compatible with) GPLv3, then you do not need a commercial license.
+In any other case, you do.
+
 
 ### What about support?
 
-When you purchase a license you have a right to email support. The business license gives priority support.
-For support requests, contact me at `almar AT almarklein.org`.
+When you purchase a license you have a right to support via Github. The
+business license gives priority support (via Github or `almar AT almarklein.org`).
+
 
 ### Do you offer refunds?
 
 No, you can try FAQ-div in advance. Therefore a purchase is final.
+
 
 ### Can I add my company VAT number?
 
