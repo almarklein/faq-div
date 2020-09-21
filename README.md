@@ -1,3 +1,5 @@
+[![CI](https://github.com/almarklein/faq-div/workflows/CI/badge.svg)](https://github.com/almarklein/faq-div/actions)
+
 ![preview](website/img/faqdiv-wide.png)
 
 # FAQ-div - turn any div into a FAQ
