@@ -24,7 +24,7 @@ etc.
 
 ```
 
-Add two lines of code :
+Add two lines of code. One to load the faq-div lib, and one to mark the start of your FAQ:
 ```html
 <script src='faq-div.min.js'></script>
 
@@ -64,4 +64,4 @@ FAQ-div is implemented in vanilla JS. The tooling is mostly in Python
 * `black .`: autoformat the Python code.
 * `flake8 . --max-line-length=89`: linting the Python code.
 * I use VS Code plugins to lint the JavaScript and CSS.
-
+* CI lints both Python and JS.
