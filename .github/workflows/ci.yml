@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - name: Lint
+            os: ubuntu-18.04
+            pyversion: '3.7'
+            nodeversion: '12'
+            lint: 1
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.pyversion }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.pyversion }}
+      - name: Set up Node ${{ matrix.nodeversion }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.nodeversion }}
+      - name: Install dependencies
+        run: |
+            python -m pip install --upgrade pip
+            pip install -U black flake8
+            npm install eslint --save-dev
+      - name: Lint Python
+        if: matrix.lint == 1
+        run: |
+            black --check .
+            flake8 . --max-line-length=89
+      - name: Lint JS
+        if: matrix.lint == 1
+        run: |
+            npx eslint src
