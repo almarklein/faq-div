@@ -105,7 +105,7 @@ def collect_assets():
     this_dir = os.path.abspath(os.path.dirname(__file__))
     assets = {}
     example_names = []
-    for subdir in ("", "examples", "img", "blog/img"):
+    for subdir in ("", "examples", "img"):
         fulldir = os.path.join(this_dir, subdir) if subdir else this_dir
         for fname in os.listdir(fulldir):
             filename = os.path.join(fulldir, fname)
