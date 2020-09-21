@@ -226,6 +226,11 @@ business license gives priority support (via Github or `almar AT almarklein.org`
 No, you can try FAQ-div in advance. Therefore a purchase is final.
 
 
+### Is VAT included in the price?
+
+No, the VAT differs per country, and Gumroad (our reseller) adds the VAT to the set price.
+
+
 ### Can I add my company VAT number?
 
 Yes, you can provide your company VAT number during checkout.
