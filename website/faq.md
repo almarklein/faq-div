@@ -176,7 +176,7 @@ It's safe to call it multiple times.
 Add the file `faq-div.min.js` to your website. Then add the below code
 to your `functions.php`:
 
-```php
+```perl
 add_action( 'wp_enqueue_scripts', 'addFaqDivScript');
 function addFaqDivScript() {
     if ( is_page('your-page-title-or-id') ) {
