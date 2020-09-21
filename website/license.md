@@ -1,7 +1,7 @@
 # FAQ-div commercial license agreement
 
 This Software License Agreement (the "Agreement") is between Almar Klein Scientific Computing (AK) and You (either in your capacity as an individual or as a business).
-If you have not purchased a FAQ-div commercial license from faq-div.com, these terms do not apply to you, and any use of FAQ-div in an Application is prohibited.
+If you have not purchased a FAQ-div commercial license from faq-div.com, these terms do not apply to you, and your use of the Software is instead governed by the [GNU General Public License, version 3](https://www.gnu.org/licenses/gpl-3.0.html).
 
 
 ## License types
