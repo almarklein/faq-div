@@ -80,10 +80,11 @@ def md_highlight(text):
             if code:
                 formatter = HtmlFormatter()
                 try:
-                    lexer = get_lexer_by_name(code[0])
+                    lexer = get_lexer_by_name(code[0].strip())
                 except Exception:
                     lexer = get_lexer_by_name("text")
-                lines.append(highlight("\n".join(code[1:]), lexer, formatter))
+                html = highlight("\n".join(code[1:]), lexer, formatter)
+                lines.append(html)
                 code = []
             else:
                 code.append(line[3:].strip())  # language
@@ -96,7 +97,7 @@ def md_highlight(text):
 
 def md2html(text):
     text2 = md_highlight(text)
-    html = markdown.markdown(text, extensions=[])
+    html = markdown.markdown(text2, extensions=[])
     return html
 
 
