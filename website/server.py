@@ -143,6 +143,20 @@ def collect_assets():
     html = html.replace("TITLE", "FAQ-div blog")
     assets["blog"] = assets["blog/"] = html
 
+    # Generate sitemap
+    sitemap = ["", "blog"] + [fname for fname, title in blogpages.values()]
+    sitemap = ["https://faq-div.com/" + x for x in sitemap]
+    assets["sitemap.txt"] = "\n".join(sitemap)
+
+    # Generate robots.txt
+    robots = [
+        "Sitemap: https://faq-div.com/sitemap.txt",
+        "User-agent: *",
+        "Allow: /",
+        "",
+    ]
+    assets["robots.txt"] = "\n".join(robots)
+
     # Post processing
     faq_html = md2html(assets["faq.md"])
     index_html = assets["index.html"]
@@ -166,6 +180,7 @@ asset_handler = asgineer.utils.make_asset_handler(collect_assets())
 # %% Serving
 
 stats_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
 
 def send_stats(request, status_code=None, rtime=None, is_page=None):
     """ Send request stats over UPD to a stats server. """
