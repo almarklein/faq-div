@@ -27,7 +27,7 @@ including (but not limited to) websites, deskop applications and mobile applicat
 * *Website* means a single domain name.
 * *Licensed Developer* means an individual person permitted to use the Software and make Modifications for your Applications, whether such person is Your employee or a consultant or contractor providing services to You.
 * *Modification* means any revision, adaptation, or derivative of the Software produced by You.
-* The *Software* means faq-div.js
+* The *Software* means the FAQ-div JavaScript library.
 
 
 ## License grant

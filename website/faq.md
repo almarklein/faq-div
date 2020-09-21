@@ -17,7 +17,7 @@ Download the FAQ-div lib and add it to your website's assets, then add
 the following HTML anywhere on your page (preferably in the head section):
 
 ```html
-<script src='faq-div.js'></script>
+<script src='faq-div.min.js'></script>
 ```
 
 Alternatively, you can copy the source code and include the source directly:
@@ -173,19 +173,19 @@ It's safe to call it multiple times.
 
 ### How do I add FAQ-div to my WordPress site?
 
-Add the file `faq-div.js` to your website. Then add the below code
+Add the file `faq-div.min.js` to your website. Then add the below code
 to your `functions.php`:
 
 ```php
 add_action( 'wp_enqueue_scripts', 'addFaqDivScript');
 function addFaqDivScript() {
     if ( is_page('your-page-title-or-id') ) {
-        wp_enqueue_script('faq-div.js', '/path/to/faq-div.js');
+        wp_enqueue_script('faq-div.min.js', '/path/to/faq-div.min.js');
     }
 }
 ```
 
-The `/path/to/faq-div.js` must be the script's path relative to the
+The `/path/to/faq-div.min.js` must be the script's path relative to the
 WordPress root directory, or it can be the full URL.
 
 
