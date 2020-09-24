@@ -67,7 +67,7 @@ def collect_assets():
                     assets[fname] = f.read().decode()
                 if subdir == "examples" and fname.endswith(".html"):
                     examples.append(fname[:-5])
-            elif fname.endswith((".png", ".jpg", ".ico")):
+            elif fname.endswith((".png", ".jpg", ".ico", ".svg")):
                 with open(filename, "rb") as f:
                     assets[fname] = f.read()
 
