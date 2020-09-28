@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>FAQ-div</title>
     <link rel="icon" sizes="192x192" href="faqdivlogo192.png">
     <script src='faq-div.min.js'></script>
@@ -69,9 +70,14 @@
     justify-content: flex-end;
 }
 .headermenu > a {
-    margin: 1em;
-    font-size: 120%;
+    margin: 0.5em;
     font-weight: bold;
+}
+.headermenu > .headerspacer { width: 0; }
+
+@media screen and (min-width: 550px) {
+    .headermenu > a { font-size: 120%; margin: 1em; }
+    .headermenu > .headerspacer { width: 10vw; }
 }
 </style>
 
@@ -81,7 +87,7 @@
     <a href='#docs'>Docs</a>
     <a href='/blog'>Blog</a>
     <a href='https://github.com/almarklein/faq-div'>Github</a>
-    <span style='width:10vw'></span>
+    <span class='headerspacer'></span>
 </div>
 
 
@@ -386,7 +392,7 @@ window.addEventListener("load", init_example_links);
 .pricing > a {
     display: block;
     position: relative;
-    margin: 0 1em;
+    margin: 1em;
     padding: 1em;
     background: #fff;
     border-radius: 4px;
@@ -458,7 +464,7 @@ window.addEventListener("load", init_example_links);
 </div>
 <div class='content'>
 
-    <br /><br />
+    <br />
     <p>
     FAQ-div is free for Open Source: licensed under a GPLv3 license, you
     can use FAQ-div in Open Source projects if (and only if) these projects
@@ -486,7 +492,7 @@ window.addEventListener("load", init_example_links);
     font-size: 150%;
 }
 .faqcontainer .faq {
-    width: 800px;
+    width: 100%;
     max-width: 800px;
 }
 .faqcontainer .faq > .qa {
