@@ -91,7 +91,7 @@ def collect_assets():
     html = "<h2>Pages</h2>\n\n"
     for date in sorted(blogpages.keys(), reverse=False):
         fname, title = blogpages[date]
-        html += f"<a href='/{fname}'>{title}</a><br />\n"
+        html += f"<a href='/{fname}'>{title}</a><br /><br />\n"
     assets["blog"] = template.render(
         title="FAQ-div blog",
         header_image="faqdiv-blog.png",
