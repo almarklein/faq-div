@@ -16,18 +16,18 @@ jobs:
       matrix:
         include:
           - name: Lint
-            os: ubuntu-18.04
-            pyversion: '3.7'
-            nodeversion: '12'
+            os: ubuntu-latest
+            pyversion: '3.11'
+            nodeversion: '18'
             lint: 1
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.pyversion }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.pyversion }}
       - name: Set up Node ${{ matrix.nodeversion }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.nodeversion }}
       - name: Install dependencies
