@@ -247,9 +247,18 @@ function faq_this_div(ref_node, faq_id) {
         }
     }
 
+    function maybe_collapse_all() {
+        if (config.collapse == 'allbutone') {
+            for (let hash in index) { // hide all
+                let qa = index[hash];
+                qa.node.classList.add('collapsed');
+            }
+        }
+    }
     function onhash(hash) {
         var qa = index[hash];
         if (qa) {
+            maybe_collapse_all();
             qa.node.classList.remove('hidden');
             qa.node.classList.remove('collapsed');
             qa.node.scrollIntoView();
@@ -264,12 +273,7 @@ function faq_this_div(ref_node, faq_id) {
         let qa = index[hash];
         qa.node.classList.remove('hidden');
         if (qa.node.classList.contains('collapsed')) {
-            if (config.collapse == 'allbutone') {
-                for (let hash2 in index) { // hide all
-                    let qa2 = index[hash2];
-                    qa2.node.classList.add('collapsed');
-                }
-            }
+            maybe_collapse_all();
             qa.node.classList.remove('collapsed');
         } else if (qa.node.classList.contains('collapsible')) {
             qa.node.classList.add('collapsed');
