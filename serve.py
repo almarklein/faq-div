@@ -1,7 +1,7 @@
 """
 Python script to serve the FAQ-div website and examples.
 
-You may need to ``pp install uvicorn, asgineer, markdown jinja2 pygments``.
+You may need to ``pip install uvicorn, asgineer, markdown jinja2 pygments``.
 """
 
 import os

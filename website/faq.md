@@ -75,6 +75,7 @@ Configurarion is done using the `data` attributes, e.g.:
 These are the configuration opions:
 
 * `data-collapse`: set to "false" to show q&a items uncollapsed. Default is "true".
+  Set to "allbutone" to collapse the previous item when a new item is opened.
 * `data-link`: set to "false" to not show the link icon when hovering over the question. Default is "true".
 * `data-search`: set to "false" to hide the search element. Default is "true".
 * `data-search-placeholder`: customize the placeholder text in the search input box.

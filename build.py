@@ -13,7 +13,7 @@ from jsmin import jsmin
 
 preamble = """
 /*
- * faq-div.min.js - Copyright 2019-2020 Almar Klein
+ * faq-div.min.js - Copyright 2019-2023 Almar Klein
  * https://github.com/almarklein/faq-div
  *
  * @license GPLv3 for open source use only

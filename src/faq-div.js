@@ -1,4 +1,4 @@
-// faq-div.js - Copyright 2019-2020 Almar Klein
+// faq-div.js - Copyright 2019-2023 Almar Klein
 // https://github.com/almarklein/faq-div
 //
 // @license GPLv3 for open source use only
@@ -8,7 +8,7 @@
 // When minified, this whole code gets wrapped into a function to avoid variable leakage.
 // Also, the CSS variable gets inserted.
 
-var version = '1.2';
+var version = '1.3';
 var css = ""; // deliberate double qoutes here
 
 // dict of faqs objects
@@ -96,15 +96,10 @@ function highlight_element(el, step) {
 }  // end of highlight_element()
 
 
-function toggle(headernode) {
+function toggle(faq_id, hash) {
     // Global function to toggle the visibility of a q/a.
-    var qa = headernode.parentNode;
-    qa.classList.remove('hidden');
-    if (qa.classList.contains('collapsed')) {
-        qa.classList.remove('collapsed');
-    } else if (qa.classList.contains('collapsible')) {
-        qa.classList.add('collapsed');
-    }
+    let faq = faqs[faq_id];
+    if (faq) { faq.toggle_one(hash); }
 }
 
 function faq_this_div(ref_node, faq_id) {
@@ -114,7 +109,7 @@ function faq_this_div(ref_node, faq_id) {
     var config = ref_node.dataset;
 
     // Register this faq in the module-level dict
-    faqs[faq_id] = {'onhash': onhash};
+    faqs[faq_id] = {'onhash': onhash, 'toggle_one': toggle_one};
 
     // Prepare
     var sections = [[null]];
@@ -208,7 +203,7 @@ function faq_this_div(ref_node, faq_id) {
                 if (config.collapse != 'false') {
                     wrapper_node.classList.add('collapsible');
                     wrapper_node.classList.add('collapsed');
-                    header_node.setAttribute('onclick', 'faqdiv.toggle(this);');
+                    header_node.setAttribute('onclick', 'faqdiv.toggle("'+faq_id+'","'+hash+'");');
                     let icon_node = document.createElement('a');
                     icon_node.className = 'collapse-icon';
                     header_node.appendChild(icon_node);
@@ -254,6 +249,22 @@ function faq_this_div(ref_node, faq_id) {
         } else if (hash) {
             search_node.value = hash.replace(new RegExp('-', 'g'), ' ');
             search();
+        }
+    }
+
+    function toggle_one(hash) {
+        let qa = index[hash];
+        qa.node.classList.remove('hidden');
+        if (qa.node.classList.contains('collapsed')) {
+            if (config.collapse == 'allbutone') {
+                for (let hash2 in index) { // hide all
+                    let qa2 = index[hash2];
+                    qa2.node.classList.add('collapsed');
+                }
+            }
+            qa.node.classList.remove('collapsed');
+        } else if (qa.node.classList.contains('collapsible')) {
+            qa.node.classList.add('collapsed');
         }
     }
 
