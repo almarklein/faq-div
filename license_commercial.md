@@ -34,7 +34,7 @@ including (but not limited to) websites, deskop applications and mobile applicat
 
 Subject to the terms of this Agreement, AK grants to You a revocable, non-exclusive, non-transferable license: (i) for use of the Software by the number of developers and for the number of Applications as dictated by your purchased license (see section License Types); (ii) for You to distribute the Software and/or Modifications to an unlimited number of End Users solely as integrated into the Applications; and (iii) for End Users to use the Software as incorporated into Your Applications in accordance with the terms of this Agreement.
 
-You are entitled to receive updates to the Software licensed by you, until one year after purchasing of this license, as well as any later version of the Software that AK, in writing, explicitly authorizes you to use. AK makes no representation that any update will be compatible with your Application.
+You are entitled to receive all updates to the Software licensed by you, as well as any later version of the Software that AK, in writing, explicitly authorizes you to use. AK makes no representation that any update will be compatible with your Application.
 
 
 ## Ownership
