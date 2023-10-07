@@ -138,18 +138,26 @@ function faq_this_div(ref_node, faq_id) {
         while (node) {
             var node_type = node.nodeName.toLowerCase();
             if (node_type == 'h3') {
-                // Get hash for this question
+                // Get hash for this question. First try to find an actual anchor.
                 var hash = '';
-                for (let c of node.innerText.toLowerCase().replace(new RegExp(' ', 'g'), '-')) {
-                    if ('abcdefghijklmnopqrstuvwxyz_-0123456789'.indexOf(c) >= 0) {
-                        hash = hash + c;
+                for (let subnode of node.children) {
+                    if (subnode.nodeName == "A" && subnode.name) {
+                        hash = subnode.name;
                     }
                 }
-                // Make sure it is unique
-                var ori_hash = hash;
-                for (let j=1; j<1000; j++) {
-                    if (typeof index[hash] == 'undefined') {break; }
-                    else { hash = ori_hash + j; }
+                if (!hash) {
+                    // Derive hash from the text. The downside of this is that when the text is changed, any links using the hash become invalid.
+                    for (let c of node.innerText.toLowerCase().replace(new RegExp(' ', 'g'), '-')) {
+                        if ('abcdefghijklmnopqrstuvwxyz_-0123456789'.indexOf(c) >= 0) {
+                            hash = hash + c;
+                        }
+                    }
+                    // Make sure it is unique
+                    var ori_hash = hash;
+                    for (let j=1; j<1000; j++) {
+                        if (typeof index[hash] == 'undefined') {break; }
+                        else { hash = ori_hash + j; }
+                    }
                 }
                 // Add to index and sections
                 index[hash] = {'hash': hash};

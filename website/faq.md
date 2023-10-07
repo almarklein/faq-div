@@ -65,7 +65,7 @@ of your FAQ in a div that has the class "faq":
 ```
 
 
-### How can I configure my FAQ?
+### <a name="configure"></a> How can I configure my FAQ?
 
 Configurarion is done using the `data` attributes, e.g.:
 ```
