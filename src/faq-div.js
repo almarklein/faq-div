@@ -138,18 +138,26 @@ function faq_this_div(ref_node, faq_id) {
         while (node) {
             var node_type = node.nodeName.toLowerCase();
             if (node_type == 'h3') {
-                // Get hash for this question
+                // Get hash for this question. First try to find an actual anchor.
                 var hash = '';
-                for (let c of node.innerText.toLowerCase().replace(new RegExp(' ', 'g'), '-')) {
-                    if ('abcdefghijklmnopqrstuvwxyz_-0123456789'.indexOf(c) >= 0) {
-                        hash = hash + c;
+                for (let subnode of node.children) {
+                    if (subnode.nodeName == "A" && subnode.name) {
+                        hash = subnode.name;
                     }
                 }
-                // Make sure it is unique
-                var ori_hash = hash;
-                for (let j=1; j<1000; j++) {
-                    if (typeof index[hash] == 'undefined') {break; }
-                    else { hash = ori_hash + j; }
+                if (!hash) {
+                    // Derive hash from the text. The downside of this is that when the text is changed, any links using the hash become invalid.
+                    for (let c of node.innerText.toLowerCase().replace(new RegExp(' ', 'g'), '-')) {
+                        if ('abcdefghijklmnopqrstuvwxyz_-0123456789'.indexOf(c) >= 0) {
+                            hash = hash + c;
+                        }
+                    }
+                    // Make sure it is unique
+                    var ori_hash = hash;
+                    for (let j=1; j<1000; j++) {
+                        if (typeof index[hash] == 'undefined') {break; }
+                        else { hash = ori_hash + j; }
+                    }
                 }
                 // Add to index and sections
                 index[hash] = {'hash': hash};
@@ -239,9 +247,18 @@ function faq_this_div(ref_node, faq_id) {
         }
     }
 
+    function maybe_collapse_all() {
+        if (config.collapse == 'allbutone') {
+            for (let hash in index) { // hide all
+                let qa = index[hash];
+                qa.node.classList.add('collapsed');
+            }
+        }
+    }
     function onhash(hash) {
         var qa = index[hash];
         if (qa) {
+            maybe_collapse_all();
             qa.node.classList.remove('hidden');
             qa.node.classList.remove('collapsed');
             qa.node.scrollIntoView();
@@ -256,12 +273,7 @@ function faq_this_div(ref_node, faq_id) {
         let qa = index[hash];
         qa.node.classList.remove('hidden');
         if (qa.node.classList.contains('collapsed')) {
-            if (config.collapse == 'allbutone') {
-                for (let hash2 in index) { // hide all
-                    let qa2 = index[hash2];
-                    qa2.node.classList.add('collapsed');
-                }
-            }
+            maybe_collapse_all();
             qa.node.classList.remove('collapsed');
         } else if (qa.node.classList.contains('collapsible')) {
             qa.node.classList.add('collapsed');
