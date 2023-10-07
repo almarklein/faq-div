@@ -38,8 +38,8 @@ jobs:
       - name: Lint Python
         if: matrix.lint == 1
         run: |
-            black --check .
-            flake8 . --max-line-length=89
+            black --check ./*.py
+            flake8 ./*.py --max-line-length=89
       - name: Lint JS
         if: matrix.lint == 1
         run: |
