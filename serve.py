@@ -139,7 +139,7 @@ stats_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 
 def send_stats(request, status_code=None, rtime=None, is_page=None):
-    """ Send request stats over UPD to a stats server. """
+    """Send request stats over UPD to a stats server."""
     mypaas_service = os.getenv("MYPAAS_SERVICE", "")
     if not mypaas_service:
         return
@@ -159,7 +159,6 @@ def send_stats(request, status_code=None, rtime=None, is_page=None):
 
 @asgineer.to_asgi
 async def main_handler(request):
-
     path = request.path.lstrip("/")
 
     response = await asset_handler(request, path or "index.html")
